@@ -7,14 +7,14 @@
 <style>
 :root{--bg:#0e1117;--card:#171c26;--card2:#1d2430;--tx:#e6edf3;--mut:#8b949e;--bd:#2d333b;--up:#3fb950;--dn:#f85149;--acc:#58a6ff}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--tx);font-family:-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;padding:16px;max-width:1200px;margin:0 auto}
+body{background:var(--bg);color:var(--tx);font-family:-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;padding:16px;max-width:1280px;margin:0 auto}
 h1{font-size:20px;margin-bottom:4px}
 .sub{color:var(--mut);font-size:12px;margin-bottom:14px}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .chip{padding:8px 16px;border-radius:20px;border:1px solid var(--bd);background:var(--card);cursor:pointer;font-size:14px;transition:.15s}
 .chip:hover{border-color:var(--acc)}
 .chip.on{color:#fff;border-color:transparent}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
 .kpi{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px}
 .kpi .v{font-size:22px;font-weight:700}
 .kpi .l{font-size:11px;color:var(--mut);margin-top:2px}
@@ -27,108 +27,250 @@ table{width:100%;border-collapse:collapse;background:var(--card);border-radius:1
 th{background:var(--card2);color:var(--mut);padding:9px 8px;text-align:right;cursor:pointer;user-select:none;white-space:nowrap;font-weight:600}
 th:first-child,td:first-child{text-align:left}
 td{padding:9px 8px;text-align:right;border-top:1px solid var(--bd);white-space:nowrap}
+tbody tr{cursor:pointer}
 tr:hover td{background:var(--card2)}
 .up{color:var(--up)}.dn{color:var(--dn)}.neu{color:var(--mut)}
 .tag{display:inline-block;padding:1px 7px;border-radius:9px;font-size:10px;margin-left:3px}
 .t-hot{background:#3d1f1f;color:#ff7b72}.t-cold{background:#12261c;color:#56d364}.t-ma{background:#12261c;color:#56d364}.t-below{background:#3d1f1f;color:#ff7b72}.t-vol{background:#1c2a3d;color:#79c0ff}
+.t-cons{background:#2a2410;color:#e3b341}
 .rpt{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-top:14px}
 .rpt h3{font-size:14px;margin-bottom:8px}
 .rpt pre{white-space:pre-wrap;font-size:12px;color:var(--mut);max-height:420px;overflow:auto;font-family:inherit;line-height:1.6}
 a{color:var(--acc)}
 .foot{color:var(--mut);font-size:11px;margin-top:16px;text-align:center}
 .err{color:var(--dn);font-size:11px}
-@media(max-width:700px){th,td{padding:6px 4px;font-size:11px}}
+#drawer{position:fixed;top:0;right:-620px;width:min(600px,95vw);height:100vh;background:var(--card);border-left:1px solid var(--bd);box-shadow:-8px 0 24px rgba(0,0,0,.5);transition:right .25s;overflow-y:auto;padding:18px;z-index:50}
+#drawer.open{right:0}
+#backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:40}
+#backdrop.show{display:block}
+#drawer h2{font-size:18px;margin-bottom:2px}
+#drawer .close{position:sticky;top:0;float:right;background:var(--card2);border:1px solid var(--bd);color:var(--tx);border-radius:8px;padding:4px 10px;cursor:pointer}
+.sec{margin-top:16px}
+.sec h4{font-size:13px;color:var(--acc);margin-bottom:6px;border-bottom:1px solid var(--bd);padding-bottom:4px}
+.chk{width:100%;font-size:12px}
+.chk td{text-align:left;padding:6px 4px;white-space:normal}
+.chk td:first-child{width:110px;color:var(--mut)}
+.chk .v-ok{color:var(--up)}.chk .v-warn{color:#e3b341}.chk .v-bad{color:var(--dn)}.chk .v-na{color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mini{background:var(--card2);border-radius:8px;padding:8px;font-size:12px}
+.mini .mv{font-size:16px;font-weight:700}
+.tl{font-size:12px}
+.tl .ev{padding:6px 0;border-bottom:1px dashed var(--bd)}
+.tl .who{color:var(--acc)}
+.tl .sn{color:var(--mut);line-height:1.5}
+@media(max-width:700px){th,td{padding:6px 4px;font-size:11px}.grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 <h1>📊 分析師標的量化儀表板</h1>
-<div class="sub" id="updated">載入中…</div>
+<div class="sub" id="updated">載入中…　｜　點分析師切換、點欄位排序、<b>點股票列看 8 項基本面檢查＋90天統計＋提及時間軸</b></div>
 <div class="chips" id="chips"></div>
 <div class="cards" id="kpis"></div>
 <div class="tools">
   <input id="q" placeholder="搜尋代號 / 名稱…">
+  <button class="fbtn" data-f="cons">共識≥3檔</button>
   <button class="fbtn" data-f="ma">僅多頭(MA20上)</button>
   <button class="fbtn" data-f="rsih">RSI&gt;70</button>
   <button class="fbtn" data-f="rsil">RSI&lt;30</button>
   <button class="fbtn" data-f="vol">爆量(&gt;1.5x)</button>
-  <button class="fbtn" data-f="low52">近低點(&lt;30%)</button>
+  <button class="fbtn" data-f="low90">近90低(&lt;25%)</button>
 </div>
 <table id="tbl"><thead><tr>
 <th data-k="code">代號</th><th data-k="name">名稱</th><th data-k="price">價格</th><th data-k="chg_pct">漲跌%</th>
-<th data-k="chg_3mo_pct">3月%</th><th data-k="pos_52wk_pct">52週位置%</th><th data-k="rsi14">RSI14</th>
-<th data-k="ma20">MA20</th><th data-k="ma60">MA60</th><th data-k="vol5_vs_vol20">量比</th><th data-k="">訊號</th>
+<th data-k="mentions">共識數</th><th data-k="win5">勝率5日</th><th data-k="win20">勝率20日</th>
+<th data-k="ret90">90日%</th><th data-k="mdd">回撤%</th><th data-k="rsi14">RSI14</th>
+<th data-k="vol5_vs_vol20">量比</th><th data-k="">訊號</th>
 </tr></thead><tbody id="tbody"></tbody></table>
 <div class="rpt"><h3 id="rpttitle">報告全文</h3><pre id="rptbody">—</pre></div>
-<div class="foot">資料源：報告字幕抽取 + Yahoo Finance｜每日由 Hermes 排程更新｜數據無法驗證時顯示 — 而非推估</div>
+<div class="foot">資料源：90天影片轉錄抽取 + TWSE MCP（上市限定）｜每日由 Hermes 排程更新｜數據無法驗證時顯示 — 或「資料未取得」而非推估</div>
+<div id="backdrop"></div>
+<div id="drawer"><button class="close" onclick="closeDrawer()">✕</button><div id="drawerBody"></div></div>
 <script>
-let MAN=null, cur=null, sortK='chg_3mo_pct', sortAsc=false, filters=new Set();
-const fmt=(v,suf='')=>(v==null||isNaN(v))?'—':(Number(v).toFixed(suf==='%'?2:1)+suf);
+let MAN=null, cur=null, sortK='mentions', sortAsc=false, filters=new Set();
+let STATS={}, FUND={}, MENT=null, CHDATA={};
+const fmt=(v,suf='')=>(v==null||isNaN(v))?'—':(Number(v).toFixed(suf==='%'?1:1)+suf);
 const cls=v=>v==null||isNaN(v)?'neu':(v>0?'up':v<0?'dn':'neu');
+
+async function jget(u){try{const r=await fetch(u+'?ts='+Date.now());if(!r.ok)return null;return await r.json()}catch(e){return null}}
+
 async function boot(){
-  MAN=await (await fetch('data/manifest.json?ts='+Date.now())).json();
-  document.getElementById('updated').textContent='最後更新：'+(MAN.updated_at?new Date(MAN.updated_at).toLocaleString('zh-TW'):'—')+'　｜　點分析師切換、點欄位排序';
+  MAN=await jget('data/manifest.json'); if(!MAN){document.getElementById('updated').textContent='載入失敗';return}
+  document.getElementById('updated').textContent='最後更新：'+(MAN.updated_at?new Date(MAN.updated_at).toLocaleString('zh-TW'):'—')+'　｜　點分析師切換、點欄位排序、點股票列看詳情';
+  STATS=(await jget('data/stats.json'))||{};
+  FUND=(await jget('data/fundamentals.json'))||{};
+  MENT=await jget('data/mentions.json');
   const chips=document.getElementById('chips');
-  const order=['zhangzhen','gd1788','we178','s178','gooaye'];
+  const order=['all','zhangzhen','gd1788','we178','s178','gooaye'];
   for(const id of order){
-    const c=MAN.channels[id]; if(!c) continue;
-    const b=document.createElement('div');b.className='chip';b.textContent=c.name;b.dataset.id=id;
+    if(id!=='all'&&!MAN.channels[id])continue;
+    const b=document.createElement('div');b.className='chip';
+    b.textContent=id==='all'?'🔎 90天全域共識':MAN.channels[id].name;b.dataset.id=id;
     b.onclick=()=>select(id);chips.appendChild(b);
   }
-  const first=order.find(i=>MAN.channels[i])||Object.keys(MAN.channels)[0];
-  if(first) select(first);
+  select('all');
 }
+
 async function select(id){
   cur=id;
   document.querySelectorAll('.chip').forEach(c=>{
     const on=c.dataset.id===id;
     c.classList.toggle('on',on);
-    c.style.background=on?(MAN.channels[id].color||'#58a6ff'):'';
+    c.style.background=on?(id==='all'?'#8957e5':(MAN.channels[id].color||'#58a6ff')):'';
   });
-  const d=await (await fetch(`data/channels/${id}.json?ts=`+Date.now())).json();
-  window._d=d;
-  renderKpis(d); renderTable(); loadReport(d);
+  if(id==='all'){
+    // merge all channels
+    for(const cid of Object.keys(MAN.channels)){
+      if(!CHDATA[cid])CHDATA[cid]=await jget('data/channels/'+cid+'.json');
+    }
+    renderAll();return;
+  }
+  if(!CHDATA[id])CHDATA[id]=await jget('data/channels/'+id+'.json');
+  const d=CHDATA[id]; if(!d)return;
+  window._d=d; renderKpis(d); renderTable(rowsForChannel(d)); loadReport(d);
 }
+
+function enrich(code,s,st){
+  // merge channel stock + stats db
+  const k=st||STATS[code]||{};
+  return Object.assign({},s||{},{
+    code,name:(s&&s.name)||k.name||'',
+    price:s?s.price:null,chg_pct:s?s.chg_pct:null,rsi14:s?s.rsi14:null,
+    ma20:s?s.ma20:null,ma60:s?s.ma60:null,vol5_vs_vol20:s?s.vol5_vs_vol20:null,
+    above_ma20:s?s.above_ma20:null,above_ma60:s?s.above_ma60:null,err:s?s.err:null,
+    mentions:k.mentions_90d!=null?k.mentions_90d:(s&&s.mentions_90d)||null,
+    channels_mentioning:k.channels_mentioning||null,
+    win5:k.win_rate_5d_pct!=null?k.win_rate_5d_pct:null,
+    win20:k.win_rate_20d_pct!=null?k.win_rate_20d_pct:null,
+    ret90:k.ret_90d_pct!=null?k.ret_90d_pct:(s?s.chg_3mo_pct:null),
+    mdd:k.max_dd_pct!=null?k.max_dd_pct:null,
+    pos90:k.pos_in_range_pct!=null?k.pos_in_range_pct:(s?s.pos_52wk_pct:null),
+  });
+}
+function rowsForChannel(d){
+  return (d.stocks||[]).map(s=>enrich(s.code,s));
+}
+function rowsForAll(){
+  const map={};
+  // union of stats codes + all channel stocks
+  for(const [c,k] of Object.entries(STATS)) map[c]=enrich(c,null,k);
+  for(const cid of Object.keys(MAN.channels)){
+    const d=CHDATA[cid]; if(!d)continue;
+    for(const s of (d.stocks||[])){
+      map[s.code]=enrich(s.code,s,STATS[s.code]);
+    }
+  }
+  return Object.values(map).filter(r=>r.err==null||r.mentions);
+}
+
 function renderKpis(d){
-  const ok=d.stocks.filter(s=>!s.err);
-  const up=ok.filter(s=>s.chg_pct>0).length, dn=ok.filter(s=>s.chg_pct<0).length;
-  const ma=ok.filter(s=>s.above_ma20).length;
-  const hot=ok.filter(s=>s.rsi14>70).length;
+  const rows=window._rows||[];
+  const withStat=rows.filter(r=>r.mentions!=null);
+  const nCh=Object.keys(MAN.channels).length;
+  const avgWin=withStat.filter(r=>r.win5!=null);
+  const aw=avgWin.length?Math.round(avgWin.reduce((a,r)=>a+r.win5,0)/avgWin.length):null;
+  const cons=withStat.filter(r=>r.mentions>=3).length;
   document.getElementById('kpis').innerHTML=[
-    ['標的數',ok.length],['上漲',`<span class=up>${up}</span>`],['下跌',`<span class=dn>${dn}</span>`],
-    ['站上MA20',`${ma}/${ok.length}`],['RSI>70 過熱',hot],['報告日',d.report_date||'—']
+    ['股票池',rows.length],['分析師頻道',nCh],
+    ['共識≥3次',cons],['平均5日勝率',aw!=null?aw+'%':'—'],
+    ['統計資料檔',Object.keys(STATS).length],['報告日',d&&d.report_date||'90天']
   ].map(([l,v])=>`<div class=kpi><div class=v>${v}</div><div class=l>${l}</div></div>`).join('');
 }
-function renderTable(){
-  if(!window._d) return;
+function renderAll(){
+  window._rows=rowsForAll();
+  renderKpis(null); renderTable(window._rows);
+  document.getElementById('rpttitle').textContent='🔎 90 天全域共識模式：合併五頻道近期所有提及個股';
+  document.getElementById('rptbody').textContent='點任意股票列 → 右側展開 8 項基本面檢查、90 日量化統計、分析師提及時間軸。共识數=90天內被提及次數（跨頻道）；勝率=提及後5/20個交易日上漲機率。';
+}
+function renderTable(rows){
+  rows=rows||window._rows||[];
   const q=document.getElementById('q').value.trim();
-  let rows=window._d.stocks.filter(s=>{
+  let rs=rows.filter(s=>{
     if(q && !(String(s.code).includes(q)||(s.name||'').includes(q))) return false;
+    if(filters.has('cons') && !(s.mentions>=3)) return false;
     if(filters.has('ma') && !s.above_ma20) return false;
     if(filters.has('rsih') && !(s.rsi14>70)) return false;
     if(filters.has('rsil') && !(s.rsi14!=null&&s.rsi14<30)) return false;
     if(filters.has('vol') && !(s.vol5_vs_vol20>1.5)) return false;
-    if(filters.has('low52') && !(s.pos_52wk_pct!=null&&s.pos_52wk_pct<30)) return false;
+    if(filters.has('low90') && !(s.pos90!=null&&s.pos90<25)) return false;
     return true;
   });
-  rows.sort((a,b)=>{
+  rs.sort((a,b)=>{
     let va=a[sortK],vb=b[sortK];
     if(va==null)return 1; if(vb==null)return -1;
     if(typeof va==='string')return sortAsc?va.localeCompare(vb):vb.localeCompare(va);
     return sortAsc?va-vb:vb-va;
   });
-  document.getElementById('tbody').innerHTML=rows.map(s=>{
-    if(s.err) return `<tr><td>${s.code}</td><td colspan=10 class=err>資料無法取得：${s.err}</td></tr>`;
+  document.getElementById('tbody').innerHTML=rs.map(s=>{
+    if(s.err&&!s.mentions) return `<tr><td>${s.code}</td><td colspan=11 class=err>資料無法取得：${s.err}</td></tr>`;
     let tags='';
+    if(s.mentions>=3)tags+=`<span class="tag t-cons">共識×${s.mentions}</span>`;
     if(s.rsi14>70)tags+='<span class="tag t-hot">過熱</span>';
     if(s.rsi14!=null&&s.rsi14<30)tags+='<span class="tag t-cold">超賣</span>';
     if(s.above_ma20)tags+='<span class="tag t-ma">多頭</span>';else if(s.above_ma20===false)tags+='<span class="tag t-below">空頭</span>';
     if(s.vol5_vs_vol20>1.5)tags+='<span class="tag t-vol">爆量</span>';
-    return `<tr><td>${s.code}</td><td style="text-align:left">${s.name||''}</td><td>${fmt(s.price)}</td>
-    <td class=${cls(s.chg_pct)}>${fmt(s.chg_pct,'%')}</td><td class=${cls(s.chg_3mo_pct)}>${fmt(s.chg_3mo_pct,'%')}</td>
-    <td>${fmt(s.pos_52wk_pct,'%')}</td><td>${fmt(s.rsi14)}</td><td>${fmt(s.ma20)}</td><td>${fmt(s.ma60)}</td>
-    <td>${fmt(s.vol5_vs_vol20,'x')}</td><td style="text-align:left">${tags}</td></tr>`;
+    return `<tr onclick="openDrawer('${s.code}')"><td>${s.code}</td><td style="text-align:left">${s.name||''}</td><td>${fmt(s.price)}</td>
+    <td class=${cls(s.chg_pct)}>${fmt(s.chg_pct,'%')}</td>
+    <td>${s.mentions!=null?s.mentions:'—'}</td>
+    <td class=${s.win5!=null?(s.win5>=50?'up':'dn'):'neu'}>${s.win5!=null?s.win5+'%':'—'}</td>
+    <td class=${s.win20!=null?(s.win20>=50?'up':'dn'):'neu'}>${s.win20!=null?s.win20+'%':'—'}</td>
+    <td class=${cls(s.ret90)}>${fmt(s.ret90,'%')}</td><td class=${cls(s.mdd)}>${fmt(s.mdd,'%')}</td>
+    <td>${fmt(s.rsi14)}</td><td>${fmt(s.vol5_vs_vol20,'x')}</td><td style="text-align:left">${tags}</td></tr>`;
   }).join('');
 }
+
+async function openDrawer(code){
+  const st=STATS[code]||{};
+  const f=FUND[code];
+  let html=`<h2>${code} ${st.name||''}</h2><div class=sub>點背景或 ✕ 關閉</div>`;
+  // K 線統計
+  html+=`<div class=sec><h4>📈 90日量化統計</h4><div class=grid>`;
+  const cells=[['90日報酬',st.ret_90d_pct,'%'],['年化波動',st.vol_ann_pct,'%'],['最大回撤',st.max_dd_pct,'%'],
+    ['上漲天數',st.up_days_pct,'%'],['區間位置',st.pos_in_range_pct,'%'],['提及次數',st.mentions_90d,'次']];
+  for(const [l,v,u] of cells) html+=`<div class=mini><div class=mv>${v!=null?v+u:'—'}</div><div>${l}</div></div>`;
+  if(st.win_rate_5d_pct!=null) html+=`<div class=mini><div class=mv>${st.win_rate_5d_pct}%</div><div>提及後5日勝率</div></div>`;
+  if(st.avg_fwd5_pct!=null) html+=`<div class=mini><div class=mv ${st.avg_fwd5_pct>0?'up':'dn'}>${st.avg_fwd5_pct}%</div><div>提及後5日均漲跌</div></div>`;
+  if(st.avg_fwd20_pct!=null) html+=`<div class=mini><div class=mv ${st.avg_fwd20_pct>0?'up':'dn'}>${st.avg_fwd20_pct}%</div><div>提及後20日均漲跌</div></div>`;
+  html+=`</div></div>`;
+  // 8項基本面
+  html+=`<div class=sec><h4>🔍 8 項基本面檢查</h4><table class=chk>`;
+  const order=['1_毛利率趨勢','2_庫存佔營收','3_資本支出/營收','4_法人5日買超','5_商譽佔總資產','6_月營收YoY','7_估值','8_技術面90日','✕_產品營收比重'];
+  if(f&&f.items){
+    for(const k of order){
+      const it=f.items[k]||{verdict:'未檢查'};
+      const v=it.verdict||'—';
+      let cc='v-na';
+      if(/改善|正常|成長✓|乾淨|連續買超|偏低✓|合理|重資本/.test(v))cc='v-ok';
+      if(/偏高⚠|注意|停滯|無連續|偏多|僅单季/.test(v))cc='v-warn';
+      if(/轉折⚠|高減損|過熱/.test(v))cc='v-bad';
+      let extra='';
+      if(it.series)extra=it.series.map(s=>`${s.period}:${s.gm_pct}%`).join(' ');
+      if(it.months)extra=it.months.map(m=>`${m.ym}:${m.yoy_pct!=null?(m.yoy_pct>0?'+':'')+m.yoy_pct+'%':'—'}`).join(' ');
+      if(it.pct!=null)extra=`${it.label||''} ${it.pct}%`;
+      if(it.pe!=null)extra=`PE ${it.pe??'—'} / PB ${it.pb??'—'} / 殖利率 ${it.div_yield??'—'}%`;
+      if(it.streak_days!=null)extra=`連續 ${it.streak_days} 日`;
+      html+=`<tr><td>${k.replace(/^\d+_|✕_/,'')}</td><td><span class="${cc}">${v}</span> <span class=neu>${extra}</span><br><span class=neu style="font-size:10px">${it.how||''}</span></td></tr>`;
+    }
+    html+=`</table><div class=foot style="text-align:left">檢查時間：${f.checked_at||'—'}　（財報採最新已公告季；資料未取得時如實標示，不推估）</div>`;
+  } else html+=`<tr><td colspan=2 class=neu>尚未生成此檔基本面檢查（首次排程後自動補齊）</td></tr></table>`;
+  html+=`</div>`;
+  // 提及時間軸
+  html+=`<div class=sec><h4>🗓 90天提及時間軸</h4><div class=tl>`;
+  if(MENT&&MENT.events){
+    const evs=MENT.events.filter(e=>e.code===code).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,25);
+    if(!evs.length)html+=`<div class=neu>90 天內無提及紀錄</div>`;
+    for(const e of evs){
+      const link=`https://www.youtube.com/watch?v=${e.video_id}`;
+      html+=`<div class=ev><span class=who>${e.channel_name}</span> ${e.date} <a href="${link}" target=_blank>▶影片</a><div class=sn>${(e.snippet||'').replace(/</g,'&lt;')}</div></div>`;
+    }
+  } else html+=`<div class=neu>時間軸資料載入中…</div>`;
+  html+=`</div></div>`;
+  document.getElementById('drawerBody').innerHTML=html;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('backdrop').classList.add('show');
+}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('backdrop').classList.remove('show')}
+document.getElementById('backdrop').onclick=closeDrawer;
+
 async function loadReport(d){
   document.getElementById('rpttitle').textContent=`📄 ${d.name} 報告（${d.report_date||''}）：${d.report_title||''}`;
   try{
@@ -136,13 +278,15 @@ async function loadReport(d){
     document.getElementById('rptbody').textContent=await r.text();
   }catch(e){document.getElementById('rptbody').textContent='（報告載入失敗）';}
 }
-document.getElementById('q').addEventListener('input',renderTable);
+document.getElementById('q').addEventListener('input',()=>renderTable());
 document.querySelectorAll('.fbtn').forEach(b=>b.onclick=()=>{
   const f=b.dataset.f; filters.has(f)?filters.delete(f):filters.add(f);
-  b.classList.toggle('on'); renderTable();});
+  b.classList.toggle('on');
+  if(cur==='all')renderTable(rowsForAll());else renderTable(window._rows);});
 document.querySelectorAll('th[data-k]').forEach(th=>th.onclick=()=>{
   const k=th.dataset.k; if(!k)return;
-  if(sortK===k)sortAsc=!sortAsc;else{sortK=k;sortAsc=false;} renderTable();});
+  if(sortK===k)sortAsc=!sortAsc;else{sortK=k;sortAsc=false;}
+  if(cur==='all')renderTable(rowsForAll());else renderTable(window._rows);});
 boot();
 </script>
 </body>
