@@ -151,7 +151,7 @@ function rowsForChannel(d){
 }
 function rowsForAll(){
   const map={};
-  // union of stats codes + all channel stocks
+  const nm={}; if(MENT&&MENT.events) for(const e of MENT.events) nm[e.code]=e.name;
   for(const [c,k] of Object.entries(STATS)) map[c]=enrich(c,null,k);
   for(const cid of Object.keys(MAN.channels)){
     const d=CHDATA[cid]; if(!d)continue;
@@ -159,6 +159,7 @@ function rowsForAll(){
       map[s.code]=enrich(s.code,s,STATS[s.code]);
     }
   }
+  for(const r of Object.values(map)) if(!r.name&&nm[r.code]) r.name=nm[r.code];
   return Object.values(map).filter(r=>r.err==null||r.mentions);
 }
 
@@ -221,7 +222,9 @@ function renderTable(rows){
 async function openDrawer(code){
   const st=STATS[code]||{};
   const f=FUND[code];
-  let html=`<h2>${code} ${st.name||''}</h2><div class=sub>點背景或 ✕ 關閉</div>`;
+  let dnName=st.name||'';
+  if(!dnName&&MENT&&MENT.events){const e=MENT.events.find(e=>e.code===code); if(e)dnName=e.name;}
+  let html=`<h2>${code} ${dnName}</h2><div class=sub>點背景或 ✕ 關閉</div>`;
   // K 線統計
   html+=`<div class=sec><h4>📈 90日量化統計</h4><div class=grid>`;
   const cells=[['90日報酬',st.ret_90d_pct,'%'],['年化波動',st.vol_ann_pct,'%'],['最大回撤',st.max_dd_pct,'%'],
