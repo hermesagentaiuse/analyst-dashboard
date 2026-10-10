@@ -1,0 +1,37 @@
+{
+ "channels": {
+  "gd1788": {
+   "name": "何基鼎",
+   "color": "#e5484d",
+   "report_date": "2026-10-08",
+   "report_title": "🎬 傳奇投資大師委員會 — 深度分析報告",
+   "stock_count": 29,
+   "ok_count": 22
+  },
+  "we178": {
+   "name": "鐘崑禎",
+   "color": "#3e8ef7",
+   "report_date": "2026-10-08",
+   "report_title": "🎬 傳奇投資大師委員會 — 深度分析報告",
+   "stock_count": 3,
+   "ok_count": 3
+  },
+  "s178": {
+   "name": "郭哲榮",
+   "color": "#30a46c",
+   "report_date": "2026-10-08",
+   "report_title": "【郭哲榮 s178】投資委員會分析報告",
+   "stock_count": 12,
+   "ok_count": 8
+  },
+  "gooaye": {
+   "name": "Gooaye 股癌",
+   "color": "#f5a524",
+   "report_date": "2026-10-08",
+   "report_title": "傳奇投資大師委員會 — Gooaye 股癌 EP703 分析報告",
+   "stock_count": 3,
+   "ok_count": 2
+  }
+ },
+ "updated_at": "2026-10-10T11:35:40.600196+00:00"
+}

@@ -1,0 +1,161 @@
+{
+ "id": "s178",
+ "name": "郭哲榮",
+ "color": "#30a46c",
+ "generated_at": "2026-10-10T11:35:37.481895+00:00",
+ "report_date": "2026-10-08",
+ "report_title": "【郭哲榮 s178】投資委員會分析報告",
+ "codes": [
+  "6488",
+  "2492",
+  "6196",
+  "6240",
+  "2327",
+  "2059",
+  "3711",
+  "2330",
+  "2454",
+  "5344",
+  "5483",
+  "0050"
+ ],
+ "stocks": [
+  {
+   "code": "6488",
+   "err": "HTTP Error 404: Not Found"
+  },
+  {
+   "code": "2492",
+   "price": 420.0,
+   "chg_pct": -1.87,
+   "chg_3mo_pct": -11.39,
+   "high52": 645.0,
+   "low52": 94.1,
+   "pos_52wk_pct": 59.2,
+   "ma20": 330.98,
+   "ma60": 298.09,
+   "above_ma20": true,
+   "rsi14": 72.3,
+   "vol5_vs_vol20": 1.78,
+   "name": "華新科"
+  },
+  {
+   "code": "6196",
+   "price": 674.0,
+   "chg_pct": 0.6,
+   "chg_3mo_pct": 23.44,
+   "high52": 684.0,
+   "low52": 218.5,
+   "pos_52wk_pct": 97.9,
+   "ma20": 570.7,
+   "ma60": 527.54,
+   "above_ma20": true,
+   "rsi14": 74.7,
+   "vol5_vs_vol20": 1.15,
+   "name": "帆宣"
+  },
+  {
+   "code": "6240",
+   "err": "HTTP Error 404: Not Found"
+  },
+  {
+   "code": "2327",
+   "price": 635.0,
+   "chg_pct": -1.85,
+   "chg_3mo_pct": -28.73,
+   "high52": 1220.0,
+   "low52": 171.0,
+   "pos_52wk_pct": 44.2,
+   "ma20": 575.8,
+   "ma60": 586.79,
+   "above_ma20": true,
+   "rsi14": 59.9,
+   "vol5_vs_vol20": 1.6,
+   "name": "國巨"
+  },
+  {
+   "code": "2059",
+   "price": 10615.0,
+   "chg_pct": -9.97,
+   "chg_3mo_pct": 31.13,
+   "high52": 15085.0,
+   "low52": 2875.0,
+   "pos_52wk_pct": 63.4,
+   "ma20": 12242.0,
+   "ma60": 11577.33,
+   "above_ma20": false,
+   "rsi14": 35.9,
+   "vol5_vs_vol20": 1.61,
+   "name": "川湖"
+  },
+  {
+   "code": "3711",
+   "price": 744.0,
+   "chg_pct": 1.64,
+   "chg_3mo_pct": 19.04,
+   "high52": 758.0,
+   "low52": 168.5,
+   "pos_52wk_pct": 97.6,
+   "ma20": 674.6,
+   "ma60": 626.82,
+   "above_ma20": true,
+   "rsi14": 69.9,
+   "vol5_vs_vol20": 0.84,
+   "name": "台勝科"
+  },
+  {
+   "code": "2330",
+   "price": 2550.0,
+   "chg_pct": -1.35,
+   "chg_3mo_pct": 3.45,
+   "high52": 2590.0,
+   "low52": 1375.0,
+   "pos_52wk_pct": 96.7,
+   "ma20": 2476.5,
+   "ma60": 2413.67,
+   "above_ma20": true,
+   "rsi14": 61.1,
+   "vol5_vs_vol20": 0.95,
+   "name": "台積電"
+  },
+  {
+   "code": "2454",
+   "price": 4690.0,
+   "chg_pct": -3.0,
+   "chg_3mo_pct": 17.4,
+   "high52": 5480.0,
+   "low52": 1130.0,
+   "pos_52wk_pct": 81.8,
+   "ma20": 4834.5,
+   "ma60": 4204.17,
+   "above_ma20": false,
+   "rsi14": 49.5,
+   "vol5_vs_vol20": 0.91,
+   "name": "聯發科"
+  },
+  {
+   "code": "5344",
+   "err": "HTTP Error 404: Not Found"
+  },
+  {
+   "code": "5483",
+   "err": "HTTP Error 404: Not Found"
+  },
+  {
+   "code": "0050",
+   "price": 114.95,
+   "chg_pct": -0.95,
+   "chg_3mo_pct": 8.39,
+   "high52": 116.6,
+   "low52": 59.45,
+   "pos_52wk_pct": 97.1,
+   "ma20": 111.25,
+   "ma60": 106.38,
+   "above_ma20": true,
+   "rsi14": 65.4,
+   "vol5_vs_vol20": 1.06,
+   "name": "Yuanta/P-shares Taiwan Top 50 ETF"
+  }
+ ],
+ "ok_count": 8
+}

@@ -1,0 +1,50 @@
+{
+ "id": "gooaye",
+ "name": "Gooaye 股癌",
+ "color": "#f5a524",
+ "generated_at": "2026-10-10T11:35:40.593602+00:00",
+ "report_date": "2026-10-08",
+ "report_title": "傳奇投資大師委員會 — Gooaye 股癌 EP703 分析報告",
+ "codes": [
+  "2008",
+  "2007",
+  "1972"
+ ],
+ "stocks": [
+  {
+   "code": "2008",
+   "price": 30.55,
+   "chg_pct": -1.29,
+   "chg_3mo_pct": 3.38,
+   "high52": 31.9,
+   "low52": 27.0,
+   "pos_52wk_pct": 72.4,
+   "ma20": 30.7,
+   "ma60": 30.78,
+   "above_ma20": false,
+   "rsi14": 47.9,
+   "vol5_vs_vol20": 1.17,
+   "name": "Kao Hsing Chang Iron & Steel Corp."
+  },
+  {
+   "code": "2007",
+   "price": 6.91,
+   "chg_pct": -0.58,
+   "chg_3mo_pct": -4.95,
+   "high52": 9.65,
+   "low52": 6.63,
+   "pos_52wk_pct": 9.3,
+   "ma20": 6.89,
+   "ma60": 7.0,
+   "above_ma20": true,
+   "rsi14": 47.7,
+   "vol5_vs_vol20": 0.8,
+   "name": "Yieh Hsing Enterprise Co., Ltd."
+  },
+  {
+   "code": "1972",
+   "err": "HTTP Error 404: Not Found"
+  }
+ ],
+ "ok_count": 2
+}
