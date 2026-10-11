@@ -14,6 +14,14 @@ h1{font-size:20px;margin-bottom:4px}
 .chip{padding:8px 16px;border-radius:20px;border:1px solid var(--bd);background:var(--card);cursor:pointer;font-size:14px;transition:.15s}
 .chip:hover{border-color:var(--acc)}
 .chip.on{color:#fff;border-color:transparent}
+.macro{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:14px}
+.mcard{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px}
+.mcard .mt{font-size:11px;color:var(--mut);margin-bottom:6px}
+.mcard .mv{font-size:20px;font-weight:700}
+.mcard .ms{font-size:11px;color:var(--mut);margin-top:4px;line-height:1.5}
+.lights{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.lamp{width:14px;height:14px;border-radius:50%;display:inline-block}
+.mitem{font-size:10px;color:var(--mut)}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
 .kpi{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px}
 .kpi .v{font-size:22px;font-weight:700}
@@ -65,6 +73,7 @@ a{color:var(--acc)}
 <h1>📊 分析師標的量化儀表板</h1>
 <div class="sub" id="updated">載入中…　｜　點分析師切換、點欄位排序、<b>點股票列看 8 項基本面檢查＋90天統計＋提及時間軸</b></div>
 <div class="chips" id="chips"></div>
+<div class="macro" id="macro"></div>
 <div class="cards" id="kpis"></div>
 <div class="tools">
   <input id="q" placeholder="搜尋代號 / 名稱…">
@@ -87,7 +96,7 @@ a{color:var(--acc)}
 <div id="drawer"><button class="close" onclick="closeDrawer()">✕</button><div id="drawerBody"></div></div>
 <script>
 let MAN=null, cur=null, sortK='mentions', sortAsc=false, filters=new Set();
-let STATS={}, FUND={}, MENT=null, CHDATA={};
+let STATS={}, FUND={}, MENT=null, CHDATA={}, MARGIN=null, BIZ=null;
 const fmt=(v,suf='')=>(v==null||isNaN(v))?'—':(Number(v).toFixed(suf==='%'?1:1)+suf);
 const cls=v=>v==null||isNaN(v)?'neu':(v>0?'up':v<0?'dn':'neu');
 
@@ -99,6 +108,9 @@ async function boot(){
   STATS=(await jget('data/stats.json'))||{};
   FUND=(await jget('data/fundamentals.json'))||{};
   MENT=await jget('data/mentions.json');
+  MARGIN=await jget('data/margin_ratio.json');
+  BIZ=await jget('data/biz_cycle.json');
+  renderMacro();
   const chips=document.getElementById('chips');
   const order=['all','zhangzhen','gd1788','we178','s178','gooaye'];
   for(const id of order){
@@ -163,6 +175,28 @@ function rowsForAll(){
   return Object.values(map).filter(r=>r.err==null||r.mentions);
 }
 
+const LIGHT_HEX={'紅燈':'#f85149','黃紅燈':'#ff9f40','綠燈':'#3fb950','黃藍燈':'#58a6ff','藍燈':'#a5d6ff','黃燈':'#e3b341'};
+function renderMacro(){
+  const el=document.getElementById('macro'); const cards=[];
+  if(MARGIN){
+    const r=MARGIN.non_etf_ratio;
+    const col=r>=180?'var(--dn)':r>=160?'#ff9f40':r>=140?'#e3b341':'var(--up)';
+    cards.push(`<div class=mcard><div class=mt>💹 大盤融資維持率（扣除ETF）</div>
+      <div class=mv style="color:${col}">${r!=null?r+'%':'—'}</div>
+      <div class=ms>${MARGIN.level||''}｜保證金 ${MARGIN.margin_collateral_億??'—'} 億｜融資 ${MARGIN.margin_zhang?.toLocaleString?MARGIN.margin_zhang.toLocaleString():'—'} 張<br>
+      <span class=mitem>資料日 ${MARGIN.date||'—'}｜130%斷頭線 140%警戒 180%過熱｜${MARGIN.source||''}</span></div></div>`);
+  }
+  if(BIZ){
+    let lamps='';
+    if(BIZ.items) for(const [k,v] of Object.entries(BIZ.items))
+      lamps+=`<span title="${k}：${v}" style="display:inline-flex;align-items:center;gap:3px;margin-right:8px"><span class=lamp style="background:${LIGHT_HEX[v]||'#8b949e'}"></span><span class=mitem>${k}</span></span>`;
+    cards.push(`<div class=mcard><div class=mt>🚦 國發會景氣對策信號（${BIZ.month||'—'}）</div>
+      <div class=mv style="color:${LIGHT_HEX[BIZ.light]||'var(--tx)'}">${BIZ.light||'—'} ${BIZ.score!=null?BIZ.score+'分':''}</div>
+      <div class=ms>${BIZ.consecutive||''}｜前月 ${BIZ.prev_score!=null?BIZ.prev_score+'分':'—'}<div class=lights>${lamps}</div>
+      <span class=mitem>${BIZ.published?'發布 '+BIZ.published+'｜':''}${BIZ.source||''}</span></div></div>`);
+  }
+  el.innerHTML=cards.join('');
+}
 function renderKpis(d){
   const rows=window._rows||[];
   const withStat=rows.filter(r=>r.mentions!=null);
