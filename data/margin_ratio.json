@@ -1,10 +1,10 @@
 {
- "date": "2026-10-11",
- "non_etf_ratio": 174.1,
+ "date": "2026-10-08",
+ "non_etf_ratio": 175.3,
  "margin_collateral_億": 12172.4,
- "margin_zhang": 6743502,
- "etf_ratio": 188.5,
- "fetched_at": "2026-10-11T07:47:11",
+ "margin_zhang": 4650010,
+ "etf_ratio": null,
+ "fetched_at": "2026-10-11T09:20:43",
  "level": "🟠 偏熱",
- "source": "TWSE OpenAPI MI_MARGN + STOCK_DAY_ALL（成數：上市60%、上櫃50%）"
+ "source": "gov-mcp get_margin_ratio @ http://edgexpert-dd4f.local:9083/mcp"
 }
