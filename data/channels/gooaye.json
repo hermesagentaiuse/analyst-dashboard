@@ -2,7 +2,7 @@
  "id": "gooaye",
  "name": "Gooaye 股癌",
  "color": "#f5a524",
- "generated_at": "2026-10-13T21:39:21.865649+00:00",
+ "generated_at": "2026-10-13T23:34:52.757693+00:00",
  "report_date": "2026-10-11",
  "report_title": "🏛️ 傳奇投資大師委員會 — 股癌 EP704 深度報告",
  "codes": [
@@ -13,41 +13,6 @@
   "2000",
   "2008"
  ],
- "stocks": [
-  {
-   "name": "智邦",
-   "listed": "上市",
-   "last": 2040.0,
-   "prev": 2130.0,
-   "chg_pct": -4.23,
-   "vol_lots": 5200,
-   "code": "2345",
-   "pe": 32.05,
-   "divyield": 0.74,
-   "pb": 16.52,
-   "price": 2040.0,
-   "rsi14": null,
-   "vol5_vs_vol20": null,
-   "chg_3mo_pct": null,
-   "pos_52wk_pct": null
-  },
-  {
-   "name": "新光鋼",
-   "listed": "上市",
-   "last": 46.3,
-   "prev": 46.2,
-   "chg_pct": 0.22,
-   "vol_lots": 678,
-   "code": "2031",
-   "pe": 7.17,
-   "divyield": 5.4,
-   "pb": 1.24,
-   "price": 46.3,
-   "rsi14": null,
-   "vol5_vs_vol20": null,
-   "chg_3mo_pct": null,
-   "pos_52wk_pct": null
-  }
- ],
- "ok_count": 2
+ "stocks": [],
+ "ok_count": 0
 }

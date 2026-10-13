@@ -296,8 +296,8 @@ async function openDrawer(code){
     const evs=MENT.events.filter(e=>e.code===code).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,25);
     if(!evs.length)html+=`<div class=neu>90 天內無提及紀錄</div>`;
     for(const e of evs){
-      const link=`https://www.youtube.com/watch?v=${e.video_id}`;
-      html+=`<div class=ev><span class=who>${e.channel_name}</span> ${e.date} <a href="${link}" target=_blank>▶影片</a><div class=sn>${(e.snippet||'').replace(/</g,'&lt;')}</div></div>`;
+      const vlink=e.video_id&&e.video_id!=='report'?` <a href="https://www.youtube.com/watch?v=${e.video_id}" target=_blank>▶影片</a>`:'';
+      html+=`<div class=ev><span class=who>${e.channel_name}</span> ${e.date}${vlink}<div class=sn>${(e.snippet||'').replace(/</g,'&lt;')}</div></div>`;
     }
   } else html+=`<div class=neu>時間軸資料載入中…</div>`;
   html+=`</div></div>`;
