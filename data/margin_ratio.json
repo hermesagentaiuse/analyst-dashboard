@@ -4,7 +4,7 @@
  "margin_collateral_億": 11689.1,
  "margin_zhang": 4613643,
  "etf_ratio": null,
- "fetched_at": "2026-10-14T02:40:07",
+ "fetched_at": "2026-10-14T06:23:02",
  "level": "🟠 偏熱",
  "source": "gov-mcp get_margin_ratio @ http://edgexpert-dd4f.local:9083/mcp"
 }
