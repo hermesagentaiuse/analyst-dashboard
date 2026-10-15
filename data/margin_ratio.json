@@ -1,10 +1,10 @@
 {
- "date": "2026-10-14",
+ "date": "2026-10-15",
  "non_etf_ratio": 175.4,
- "margin_collateral_億": 11917.5,
- "margin_zhang": 4621728,
+ "margin_collateral_億": 11180.6,
+ "margin_zhang": 4555942,
  "etf_ratio": null,
- "fetched_at": "2026-10-15T12:44:33",
+ "fetched_at": "2026-10-15T22:07:34",
  "level": "🟠 偏熱",
  "source": "gov-mcp get_margin_ratio @ http://edgexpert-dd4f.local:9083/mcp"
 }
