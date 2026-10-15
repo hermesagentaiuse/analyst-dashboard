@@ -2,7 +2,7 @@
  "id": "gd1788",
  "name": "何基鼎",
  "color": "#e5484d",
- "generated_at": "2026-10-15T06:39:38.305054+00:00",
+ "generated_at": "2026-10-15T08:34:45.874818+00:00",
  "report_date": "2026-10-14",
  "report_title": "🎬 傳奇投資大師委員會 — 深度分析報告",
  "codes": [
@@ -48,7 +48,7 @@
    "macd_dif": 22.36,
    "macd_sig": 31.28,
    "macd_golden": false,
-   "volratio": 1.32,
+   "volratio": 1.37,
    "sample_days": 134,
    "chg_period": -4.31,
    "pe": 28.86,
@@ -56,7 +56,7 @@
    "pb": 10.04,
    "price": 2440.0,
    "rsi14": 44.22,
-   "vol5_vs_vol20": 1.32,
+   "vol5_vs_vol20": 1.37,
    "chg_3mo_pct": -4.31,
    "pos_52wk_pct": null
   },
