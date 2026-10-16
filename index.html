@@ -71,7 +71,7 @@ a{color:var(--acc)}
 </head>
 <body>
 <h1>📊 分析師標的量化儀表板</h1>
-<div class="sub" id="updated">載入中…　｜　點分析師切換、點欄位排序、<b>點股票列看 8 項基本面檢查＋90天統計＋提及時間軸</b></div>
+<div class="sub" id="updated">載入中…　｜　點分析師切換、點欄位排序、<b>點股票列看 8 項基本面檢查＋90天統計＋提及時間軸</b>　｜　<a href="http://edgexpert-dd4f.local:8090/" target=_blank style="color:#d29922">✏️ 管理我的持股</a></div>
 <div class="chips" id="chips"></div>
 <div class="macro" id="macro"></div>
 <div class="cards" id="kpis"></div>
@@ -96,7 +96,7 @@ a{color:var(--acc)}
 <div id="drawer"><button class="close" onclick="closeDrawer()">✕</button><div id="drawerBody"></div></div>
 <script>
 let MAN=null, cur=null, sortK='mentions', sortAsc=false, filters=new Set();
-let STATS={}, FUND={}, MENT=null, CHDATA={}, MARGIN=null, BIZ=null;
+let STATS={}, FUND={}, MENT=null, CHDATA={}, MARGIN=null, BIZ=null, PF=null, PFDATE=null;
 const fmt=(v,suf='')=>(v==null||isNaN(v))?'—':(Number(v).toFixed(suf==='%'?1:1)+suf);
 const cls=v=>v==null||isNaN(v)?'neu':(v>0?'up':v<0?'dn':'neu');
 
@@ -112,14 +112,75 @@ async function boot(){
   BIZ=await jget('data/biz_cycle.json');
   renderMacro();
   const chips=document.getElementById('chips');
-  const order=['all','zhangzhen','gd1788','we178','s178','gooaye'];
+  const order=['pf','all','zhangzhen','gd1788','we178','s178','gooaye'];
   for(const id of order){
-    if(id!=='all'&&!MAN.channels[id])continue;
+    if(id==='pf'){
+      PF=await jget('data/portfolio.json');
+      if(!PF)continue;  // 管線尚未跑過就不顯示
+    }
+    if(id!=='all'&&id!=='pf'&&!MAN.channels[id])continue;
     const b=document.createElement('div');b.className='chip';
-    b.textContent=id==='all'?'🔎 90天全域共識':MAN.channels[id].name;b.dataset.id=id;
+    b.textContent=id==='all'?'🔎 90天全域共識':(id==='pf'?`📌 我的持股 (${PF.count})`:MAN.channels[id].name);b.dataset.id=id;
     b.onclick=()=>select(id);chips.appendChild(b);
   }
-  select('all');
+  select('pf');
+}
+
+function pfRow(r){
+  return {code:r.code,name:r.name,price:r.last,chg_pct:r.chg_pct,rsi14:r.rsi14,
+    ma20:r.ma20,ma60:r.ma60,above_ma20:r.above_ma20,above_ma60:r.above_ma60,
+    vol5_vs_vol20:r.volratio,mentions:r.heat?r.heat.mentions_90d:null,
+    win5:null,win20:null,ret90:r.ret_90d_pct,mdd:r.max_dd_pct,pos90:r.pos_in_range_pct,
+    _pf:r};
+}
+async function selectPortfolio(){
+  cur='pf';
+  const d=PFDATE?await jget('data/history/portfolio/'+PFDATE+'.json'):PF;
+  if(!d)return;
+  window._rows=(d.stocks||[]).map(pfRow);
+  renderKpisPf(d); renderTable(window._rows);
+  document.getElementById('rpttitle').textContent=`📌 我的持股報告（${d.report_date}　更新：${new Date(d.generated_at).toLocaleString('zh-TW')}）`;
+  document.getElementById('rptbody').innerHTML=pfCards(d);
+}
+function renderKpisPf(d){
+  const rows=d.stocks||[];
+  const hot=rows.filter(r=>r.heat&&r.heat.mentions_30d>=2).length;
+  const bull=rows.filter(r=>r.above_ma20).length;
+  const strong=rows.filter(r=>r.rel_strength&&r.rel_strength.diff_90d_pct>=3).length;
+  document.getElementById('kpis').innerHTML=[
+    ['持有檔數',rows.length],['多頭(MA20上)',bull],['30天被提熱股',hot],
+    ['跑贏大盤',strong],['報告日',d.report_date]
+  ].map(([l,v])=>`<div class=kpi><div class=v>${v}</div><div class=l>${l}</div></div>`).join('');
+}
+function lv(v){return v==null||isNaN(v)?'—':Number(v).toLocaleString('zh-TW',{maximumFractionDigits:1});}
+function pfCards(d){
+  if(!(d.stocks||[]).length) return '持股清單是空的 — 到 <a href="http://edgexpert-dd4f.local:8090/" target=_blank>持股管理頁</a> 加入代號';
+  return d.stocks.map(r=>{
+    const L=r.levels||{};
+    const sig=(L.signals||[]).map(x=>`<span class="tag t-ma">${x}</span>`).join(' ');
+    const heat=r.heat||{};
+    const heatLbl=heat.mentions_30d>=3?'🔥 高熱度':heat.mentions_30d>=1?'💬 有討論':'💤 無討論';
+    const rs=r.rel_strength;
+    let hist='';
+    if(PF&&PF.dates&&PF.dates.length>1){
+      hist=' 歷史：'+PF.dates.slice(-10).reverse().map(dt=>
+        `<a href="#" style="color:var(--acc);text-decoration:none" onclick="PFDATE='${dt}';select('pf');return false">${dt.slice(5)}</a>`).join(' | ');
+    }
+    return `<div style="background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:10px;text-align:left">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+      <b style="font-size:16px">${r.code} ${r.name}</b>
+      <span>成交 ${lv(r.last)}　<span class="${cls(r.chg_pct)}">${fmt(r.chg_pct,'%')}</span>　${sig}</span></div>
+    <table class=chk style="margin-top:8px"><tr>
+      <td>🎯 停利</td><td>TP1 ${lv(L.tp1&&L.tp1.price)}（${L.tp1?L.tp1.rule:'—'}）<br>TP2 ${lv(L.tp2&&L.tp2.price)}（${L.tp2?L.tp2.rule:'—'}）</td></tr>
+    <tr><td>🛑 停損</td><td>短線 ${lv(L.stop_short&&L.stop_short.price)}（${L.stop_short?L.stop_short.rule:'—'}）<br>中線 ${lv(L.stop_mid&&L.stop_mid.price)}（${L.stop_mid?L.stop_mid.rule:'—'}）</td></tr>
+    <tr><td>🔥 熱度</td><td>${heatLbl}｜30天提及 ${heat.mentions_30d!=null?heat.mentions_30d:'—'} 次｜90天 ${heat.mentions_90d!=null?heat.mentions_90d:'—'} 次
+      ${(heat.channels_30d||[]).length?'｜提及者：'+heat.channels_30d.join('、'):''}
+      ${(heat.recent||[])[0]?`<br><span style="color:var(--mut);font-size:11px">${heat.recent[0].date} ${heat.recent[0].channel}：${heat.recent[0].snippet}…</span>`:''}</td></tr>
+    <tr><td>🔄 輪動</td><td>${rs?`${rs.label}（90日相對大盤 ${rs.diff_90d_pct>0?'+':''}${rs.diff_90d_pct}%）`:'—'}｜區間位置 ${fmt(r.pos_in_range_pct,'%')}</td></tr>
+    </table>
+    <div style="margin-top:8px"><a href="#" style="color:var(--acc)" onclick="openPfDrawer('${r.code}');return false">展開 8 項基本面檢查＋技術細節 →</a>　${hist}</div>
+    </div>`;
+  }).join('');
 }
 
 async function select(id){
@@ -127,8 +188,9 @@ async function select(id){
   document.querySelectorAll('.chip').forEach(c=>{
     const on=c.dataset.id===id;
     c.classList.toggle('on',on);
-    c.style.background=on?(id==='all'?'#8957e5':(MAN.channels[id].color||'#58a6ff')):'';
+    c.style.background=on?(id==='all'?'#8957e5':(id==='pf'?'#d29922':(MAN.channels[id].color||'#58a6ff'))):'';
   });
+  if(id==='pf'){PFDATE=null;await selectPortfolio();return;}
   if(id==='all'){
     // merge all channels
     for(const cid of Object.keys(MAN.channels)){
@@ -306,6 +368,59 @@ async function openDrawer(code){
   document.getElementById('backdrop').classList.add('show');
 }
 function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('backdrop').classList.remove('show')}
+async function openPfDrawer(code){
+  const r=(PF&&PF.stocks||[]).find(s=>s.code===code); if(!r)return;
+  const st=STATS[code]||{};
+  const f=r.fund||FUND[code];
+  let html=`<h2>${r.code} ${r.name}</h2><div class=sub>持股報告（${PF.report_date}）｜點背景或 ✕ 關閉</div>`;
+  // 技術面
+  const L=r.levels||{};
+  html+=`<div class=sec><h4>📐 技術面</h4><div class=grid>`;
+  const cells=[['成交',r.last,''],['MA20',r.ma20,''],['MA60',r.ma60,''],['RSI14',r.rsi14,''],['K',r.k,''],['D',r.d,''],
+    ['MACD DIF',r.macd_dif,''],['MACD SIG',r.macd_sig,''],['量比',r.volratio,'x'],['PER',r.pe,'x'],['PBR',r.pb,'x'],['殖利率',r.divyield,'%']];
+  for(const [l,v,u] of cells) html+=`<div class=mini><div class=mv>${v!=null&&!isNaN(v)?Number(v).toLocaleString()+u:'—'}</div><div>${l}</div></div>`;
+  html+=`</div>`;
+  if(L.signals&&L.signals.length)html+=`<div style="margin-top:6px">${L.signals.map(x=>`<span class="tag t-ma">${x}</span>`).join(' ')}</div>`;
+  html+=`<div class=foot style="text-align:left;margin-top:6px">🎯 TP1 ${lv(L.tp1&&L.tp1.price)}｜TP2 ${lv(L.tp2&&L.tp2.price)}｜TP3 ${lv(L.tp3&&L.tp3.price)}<br>🛑 短線 ${lv(L.stop_short&&L.stop_short.price)}｜中線 ${lv(L.stop_mid&&L.stop_mid.price)}</div></div>`;
+  // 8項基本面
+  html+=`<div class=sec><h4>🔍 8 項基本面檢查</h4><table class=chk>`;
+  const order=['1_毛利率趨勢','2_庫存佔營收','3_資本支出/營收','4_法人5日買超','5_商譽佔總資產','6_月營收YoY','7_估值','8_技術面90日','✕_產品營收比重'];
+  if(f&&f.items){
+    for(const k of order){
+      const it=f.items[k]||{verdict:'未檢查'};
+      const v=it.verdict||'—';
+      let cc='v-na';
+      if(/改善|正常|成長✓|乾淨|連續買超|偏低✓|合理|重資本/.test(v))cc='v-ok';
+      if(/偏高⚠|注意|停滯|無連續|偏多|僅单季/.test(v))cc='v-warn';
+      if(/轉折⚠|高減損|過熱/.test(v))cc='v-bad';
+      let extra='';
+      if(it.series)extra=it.series.map(s=>`${s.period}:${s.gm_pct}%`).join(' ');
+      if(it.months)extra=it.months.map(m=>`${m.ym}:${m.yoy_pct!=null?(m.yoy_pct>0?'+':'')+m.yoy_pct+'%':'—'}`).join(' ');
+      if(it.pct!=null)extra=`${it.label||''} ${it.pct}%`;
+      if(it.pe!=null)extra=`PE ${it.pe??'—'} / PB ${it.pb??'—'} / 殖利率 ${it.div_yield??'—'}%`;
+      if(it.streak_days!=null)extra=`連續 ${it.streak_days} 日`;
+      html+=`<tr><td>${k.replace(/^\d+_|✕_/,'')}</td><td><span class="${cc}">${v}</span> <span class=neu>${extra}</span><br><span class=neu style="font-size:10px">${it.how||''}</span></td></tr>`;
+    }
+    html+=`</table><div class=foot style="text-align:left">檢查時間：${f.checked_at||'—'}　（財報採最新已公告季；資料未取得時如實標示，不推估）</div>`;
+  } else html+=`<tr><td colspan=2 class=neu>尚未生成此檔基本面檢查</td></tr></table>`;
+  html+=`</div>`;
+  // 提及時間軸
+  html+=`<div class=sec><h4>🗓 90天分析師提及時間軸</h4><div class=tl>`;
+  if(MENT&&MENT.events){
+    const evs=MENT.events.filter(e=>e.code===code).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,15);
+    if(!evs.length)html+=`<div class=neu>90 天內無提及紀錄</div>`;
+    for(const e of evs){
+      const vlink=e.video_id&&e.video_id!=='report'?` <a href="https://www.youtube.com/watch?v=${e.video_id}" target=_blank>▶影片</a>`:'';
+      html+=`<div class=ev><span class=who>${e.channel_name}</span> ${e.date}${vlink}<div class=sn>${(e.snippet||'').replace(/</g,'&lt;')}</div></div>`;
+    }
+  } else html+=`<div class=neu>時間軸資料載入中…</div>`;
+  html+=`</div></div>`;
+  // 同業
+  if(r.peers)html+=`<div class=sec><h4>🔄 同業比較（資金輪動）</h4><pre style="font-size:11px;white-space:pre-wrap">${r.peers.replace(/</g,'&lt;')}</pre></div>`;
+  document.getElementById('drawerBody').innerHTML=html;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('backdrop').classList.add('show');
+}
 document.getElementById('backdrop').onclick=closeDrawer;
 
 async function loadReport(d){
