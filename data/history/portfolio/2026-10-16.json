@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-16T21:27:43.747166+08:00",
+ "generated_at": "2026-10-16T21:34:10.386302+08:00",
  "report_date": "2026-10-16",
  "count": 6,
  "dates": [
@@ -93,7 +93,7 @@
    "fund": {
     "code": "2308",
     "name": "台達電",
-    "checked_at": "2026-10-16T13:26:13Z",
+    "checked_at": "2026-10-16T13:32:57Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -284,7 +284,7 @@
    "fund": {
     "code": "3037",
     "name": "欣興",
-    "checked_at": "2026-10-16T13:26:34Z",
+    "checked_at": "2026-10-16T13:33:05Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -473,7 +473,7 @@
    "fund": {
     "code": "6669",
     "name": "緯穎",
-    "checked_at": "2026-10-16T13:26:42Z",
+    "checked_at": "2026-10-16T13:33:11Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -657,7 +657,7 @@
    "fund": {
     "code": "1519",
     "name": "華城",
-    "checked_at": "2026-10-16T13:26:45Z",
+    "checked_at": "2026-10-16T13:33:17Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -782,11 +782,11 @@
    "pe": null,
    "pb": null,
    "divyield": null,
-   "ret_90d_pct": null,
-   "max_dd_pct": null,
-   "pos_in_range_pct": null,
-   "hi90": null,
-   "lo90": null,
+   "ret_90d_pct": -25.3,
+   "max_dd_pct": -42.1,
+   "pos_in_range_pct": 36.0,
+   "hi90": 2580.0,
+   "lo90": 1495.0,
    "heat": {
     "mentions_30d": 1,
     "mentions_90d": 1,
@@ -801,7 +801,10 @@
      }
     ]
    },
-   "rel_strength": null,
+   "rel_strength": {
+    "diff_90d_pct": -26.8,
+    "label": "顯著弱勢（資金流失警訊）"
+   },
    "levels": {
     "stop_short": {
      "price": null,
@@ -810,6 +813,14 @@
     "stop_mid": {
      "price": 2008.67,
      "rule": "跌破 MA60／90日低點較高者，停損出場"
+    },
+    "tp1": {
+     "price": 2580.0,
+     "rule": "第一目標：90日高點（前高壓力）"
+    },
+    "tp2": {
+     "price": 3665.0,
+     "rule": "第二目標：前高＋90日振幅（量度目標）"
     },
     "tp3": {
      "price": 2457.0,
@@ -824,7 +835,7 @@
    "fund": {
     "code": "8299",
     "name": "群聯",
-    "checked_at": "2026-10-16T13:26:51Z",
+    "checked_at": "2026-10-16T13:33:22Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -974,7 +985,7 @@
    "fund": {
     "code": "2404",
     "name": "漢唐",
-    "checked_at": "2026-10-16T13:27:18Z",
+    "checked_at": "2026-10-16T13:33:48Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
