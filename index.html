@@ -381,7 +381,19 @@ async function openPfDrawer(code){
   for(const [l,v,u] of cells) html+=`<div class=mini><div class=mv>${v!=null&&!isNaN(v)?Number(v).toLocaleString()+u:'—'}</div><div>${l}</div></div>`;
   html+=`</div>`;
   if(L.signals&&L.signals.length)html+=`<div style="margin-top:6px">${L.signals.map(x=>`<span class="tag t-ma">${x}</span>`).join(' ')}</div>`;
-  html+=`<div class=foot style="text-align:left;margin-top:6px">🎯 TP1 ${lv(L.tp1&&L.tp1.price)}｜TP2 ${lv(L.tp2&&L.tp2.price)}｜TP3 ${lv(L.tp3&&L.tp3.price)}<br>🛑 短線 ${lv(L.stop_short&&L.stop_short.price)}｜中線 ${lv(L.stop_mid&&L.stop_mid.price)}</div></div>`;
+  html+=`<div class=foot style="text-align:left;margin-top:6px">🎯 TP1 ${lv(L.tp1&&L.tp1.price)}｜TP2 ${lv(L.tp2&&L.tp2.price)}｜TP3 ${lv(L.tp3&&L.tp3.price)}<br>🛑 短線 ${lv(L.stop_short&&L.stop_short.price)}｜中線 ${lv(L.stop_mid&&L.stop_mid.price)}</div>`;
+  // 錨點交叉表（四方法＋共振）
+  if(L.anchors&&L.anchors.length){
+    html+=`<div style="margin-top:8px;font-size:11px"><b>🧭 目標價錨點交叉</b>（${L.anchors.length} 個方法；±2.5% 內≥2 方法＝共振）`;
+    const confPrices=new Set((L.confluence||[]).map(z=>z.price));
+    html+='<table class=chk style="margin-top:4px">';
+    for(const a of L.anchors){
+      const inZone=(L.confluence||[]).some(z=>Math.abs(z.price-a.price)/a.price<=0.03);
+      html+=`<tr><td>${a.method}</td><td><span class="${inZone?'v-ok':'neu'}">${Number(a.price).toLocaleString()}</span>${inZone?' <span class=neu>←共振區</span>':''}</td></tr>`;
+    }
+    html+='</table></div>';
+  }
+  html+=`</div>`;
   // 8項基本面
   html+=`<div class=sec><h4>🔍 8 項基本面檢查</h4><table class=chk>`;
   const order=['1_毛利率趨勢','2_庫存佔營收','3_資本支出/營收','4_法人5日買超','5_商譽佔總資產','6_月營收YoY','7_估值','8_技術面90日','✕_產品營收比重'];
