@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-18T14:09:55.054271+08:00",
+ "generated_at": "2026-10-18T18:52:19.495113+08:00",
  "report_date": "2026-10-18",
  "count": 6,
  "dates": [
@@ -70,9 +70,57 @@
      "price": null,
      "rule": "已跌破 MA20，短線停損失效，依中線停損"
     },
+    "stop_ladder": [
+     {
+      "price": 1848.25,
+      "tag": "MA20",
+      "dist_pct": 13.0,
+      "breached": true
+     },
+     {
+      "price": 1778.08,
+      "tag": "MA60",
+      "dist_pct": 8.8,
+      "breached": true
+     },
+     {
+      "price": 1630.0,
+      "tag": "20日低",
+      "dist_pct": -0.3,
+      "breached": true
+     },
+     {
+      "price": 1545.7,
+      "tag": "現價-1×ATR",
+      "dist_pct": -5.5,
+      "breached": false
+     },
+     {
+      "price": 1495.0,
+      "tag": "90日低",
+      "dist_pct": -8.6,
+      "breached": false
+     },
+     {
+      "price": 1456.4,
+      "tag": "現價-2×ATR",
+      "dist_pct": -10.9,
+      "breached": false
+     },
+     {
+      "price": 1367.1,
+      "tag": "現價-3×ATR",
+      "dist_pct": -16.4,
+      "breached": false
+     }
+    ],
     "stop_mid": {
+     "price": 1545.7,
+     "rule": "跌破最近下方支撐 現價-1×ATR，停損出場"
+    },
+    "stop_next": {
      "price": 1495.0,
-     "rule": "跌破最近下方支撐 90日低，停損出場"
+     "rule": "跌破 現價-1×ATR 後的下一道支撐 90日低"
     },
     "anchors": [
      {
@@ -122,7 +170,7 @@
    "fund": {
     "code": "2308",
     "name": "台達電",
-    "checked_at": "2026-10-18T06:09:21Z",
+    "checked_at": "2026-10-18T10:51:17Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -288,9 +336,51 @@
      "price": null,
      "rule": "已跌破 MA20，短線停損失效，依中線停損"
     },
+    "stop_ladder": [
+     {
+      "price": 1161.1,
+      "tag": "MA20",
+      "dist_pct": 6.5,
+      "breached": true
+     },
+     {
+      "price": 1035.88,
+      "tag": "MA60",
+      "dist_pct": -5.0,
+      "breached": false
+     },
+     {
+      "price": 960.0,
+      "tag": "現價-2×ATR",
+      "dist_pct": -11.9,
+      "breached": false
+     },
+     {
+      "price": 940.0,
+      "tag": "20日低",
+      "dist_pct": -13.8,
+      "breached": false
+     },
+     {
+      "price": 895.0,
+      "tag": "現價-3×ATR",
+      "dist_pct": -17.9,
+      "breached": false
+     },
+     {
+      "price": 688.0,
+      "tag": "90日低",
+      "dist_pct": -36.9,
+      "breached": false
+     }
+    ],
     "stop_mid": {
      "price": 1035.88,
      "rule": "跌破最近下方支撐 MA60，停損出場"
+    },
+    "stop_next": {
+     "price": 960.0,
+     "rule": "跌破 MA60 後的下一道支撐 現價-2×ATR"
     },
     "anchors": [
      {
@@ -349,7 +439,7 @@
    "fund": {
     "code": "3037",
     "name": "欣興",
-    "checked_at": "2026-10-18T06:09:26Z",
+    "checked_at": "2026-10-18T10:51:32Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -512,9 +602,57 @@
      "price": null,
      "rule": "已跌破 MA20，短線停損失效，依中線停損"
     },
+    "stop_ladder": [
+     {
+      "price": 2142.39,
+      "tag": "MA60",
+      "dist_pct": 16.1,
+      "breached": true
+     },
+     {
+      "price": 2128.25,
+      "tag": "MA20",
+      "dist_pct": 15.4,
+      "breached": true
+     },
+     {
+      "price": 1845.0,
+      "tag": "20日低",
+      "dist_pct": 0.0,
+      "breached": true
+     },
+     {
+      "price": 1748.6,
+      "tag": "現價-1×ATR",
+      "dist_pct": -5.2,
+      "breached": false
+     },
+     {
+      "price": 1652.1,
+      "tag": "現價-2×ATR",
+      "dist_pct": -10.5,
+      "breached": false
+     },
+     {
+      "price": 1555.7,
+      "tag": "現價-3×ATR",
+      "dist_pct": -15.7,
+      "breached": false
+     },
+     {
+      "price": 1432.15,
+      "tag": "90日低",
+      "dist_pct": -22.4,
+      "breached": false
+     }
+    ],
     "stop_mid": {
-     "price": 1432.15,
-     "rule": "跌破最近下方支撐 90日低，停損出場"
+     "price": 1748.6,
+     "rule": "跌破最近下方支撐 現價-1×ATR，停損出場"
+    },
+    "stop_next": {
+     "price": 1652.1,
+     "rule": "跌破 現價-1×ATR 後的下一道支撐 現價-2×ATR"
     },
     "anchors": [
      {
@@ -565,7 +703,7 @@
    "fund": {
     "code": "6669",
     "name": "緯穎",
-    "checked_at": "2026-10-18T06:09:30Z",
+    "checked_at": "2026-10-18T10:51:36Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -705,9 +843,45 @@
      "price": null,
      "rule": "已跌破 MA20，短線停損失效，依中線停損"
     },
+    "stop_ladder": [
+     {
+      "price": 694.45,
+      "tag": "MA20",
+      "dist_pct": 5.9,
+      "breached": true
+     },
+     {
+      "price": 649.0,
+      "tag": "20日低",
+      "dist_pct": -1.1,
+      "breached": false
+     },
+     {
+      "price": 630.1,
+      "tag": "現價-1×ATR",
+      "dist_pct": -3.9,
+      "breached": false
+     },
+     {
+      "price": 604.1,
+      "tag": "現價-2×ATR",
+      "dist_pct": -7.9,
+      "breached": false
+     },
+     {
+      "price": 578.2,
+      "tag": "現價-3×ATR",
+      "dist_pct": -11.9,
+      "breached": false
+     }
+    ],
     "stop_mid": {
      "price": 649.0,
-     "rule": "跌破最近下方支撐 90日低，停損出場"
+     "rule": "跌破最近下方支撐 20日低，停損出場"
+    },
+    "stop_next": {
+     "price": 630.1,
+     "rule": "跌破 20日低 後的下一道支撐 現價-1×ATR"
     },
     "anchors": [
      {
@@ -767,7 +941,7 @@
    "fund": {
     "code": "1519",
     "name": "華城",
-    "checked_at": "2026-10-18T06:09:32Z",
+    "checked_at": "2026-10-18T10:51:39Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -908,9 +1082,57 @@
      "price": null,
      "rule": "已跌破 MA20，短線停損失效，依中線停損"
     },
+    "stop_ladder": [
+     {
+      "price": 2062.75,
+      "tag": "MA20",
+      "dist_pct": 9.1,
+      "breached": true
+     },
+     {
+      "price": 2008.67,
+      "tag": "MA60",
+      "dist_pct": 6.3,
+      "breached": true
+     },
+     {
+      "price": 1830.0,
+      "tag": "20日低",
+      "dist_pct": -3.2,
+      "breached": false
+     },
+     {
+      "price": 1806.8,
+      "tag": "現價-1×ATR",
+      "dist_pct": -4.4,
+      "breached": false
+     },
+     {
+      "price": 1723.6,
+      "tag": "現價-2×ATR",
+      "dist_pct": -8.8,
+      "breached": false
+     },
+     {
+      "price": 1640.4,
+      "tag": "現價-3×ATR",
+      "dist_pct": -13.2,
+      "breached": false
+     },
+     {
+      "price": 1495.0,
+      "tag": "90日低",
+      "dist_pct": -20.9,
+      "breached": false
+     }
+    ],
     "stop_mid": {
      "price": 1830.0,
      "rule": "跌破最近下方支撐 20日低，停損出場"
+    },
+    "stop_next": {
+     "price": 1806.8,
+     "rule": "跌破 20日低 後的下一道支撐 現價-1×ATR"
     },
     "anchors": [
      {
@@ -960,7 +1182,7 @@
    "fund": {
     "code": "8299",
     "name": "群聯",
-    "checked_at": "2026-10-18T06:09:34Z",
+    "checked_at": "2026-10-18T10:51:45Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -1104,9 +1326,57 @@
      "price": null,
      "rule": "已跌破 MA20，短線停損失效，依中線停損"
     },
+    "stop_ladder": [
+     {
+      "price": 1206.0,
+      "tag": "MA20",
+      "dist_pct": 8.6,
+      "breached": true
+     },
+     {
+      "price": 1127.33,
+      "tag": "MA60",
+      "dist_pct": 1.6,
+      "breached": true
+     },
+     {
+      "price": 1044.3,
+      "tag": "現價-1×ATR",
+      "dist_pct": -5.9,
+      "breached": false
+     },
+     {
+      "price": 1030.0,
+      "tag": "20日低",
+      "dist_pct": -7.2,
+      "breached": false
+     },
+     {
+      "price": 1005.0,
+      "tag": "90日低",
+      "dist_pct": -9.5,
+      "breached": false
+     },
+     {
+      "price": 978.6,
+      "tag": "現價-2×ATR",
+      "dist_pct": -11.8,
+      "breached": false
+     },
+     {
+      "price": 912.9,
+      "tag": "現價-3×ATR",
+      "dist_pct": -17.8,
+      "breached": false
+     }
+    ],
     "stop_mid": {
+     "price": 1044.3,
+     "rule": "跌破最近下方支撐 現價-1×ATR，停損出場"
+    },
+    "stop_next": {
      "price": 1030.0,
-     "rule": "跌破最近下方支撐 20日低，停損出場"
+     "rule": "跌破 現價-1×ATR 後的下一道支撐 20日低"
     },
     "anchors": [
      {
@@ -1165,7 +1435,7 @@
    "fund": {
     "code": "2404",
     "name": "漢唐",
-    "checked_at": "2026-10-18T06:09:38Z",
+    "checked_at": "2026-10-18T10:51:53Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [

@@ -153,6 +153,16 @@ function renderKpisPf(d){
   ].map(([l,v])=>`<div class=kpi><div class=v>${v}</div><div class=l>${l}</div></div>`).join('');
 }
 function lv(v){return v==null||isNaN(v)?'—':Number(v).toLocaleString('zh-TW',{maximumFractionDigits:1});}
+function ladderHtml(L){
+  const lad=L.stop_ladder||[];
+  if(!lad.length) return `短線 ${lv(L.stop_short&&L.stop_short.price)}｜中線 ${lv(L.stop_mid&&L.stop_mid.price)}`;
+  const first=lad.findIndex(s=>!s.breached);
+  return lad.map((s,i)=>{
+    if(s.breached) return `<span style="color:var(--mut);text-decoration:line-through">✗${s.tag} ${lv(s.price)}</span>`;
+    if(i===first) return `<b style="color:#ff6b6b">▶ ${s.tag} ${lv(s.price)}（${s.dist_pct}%）生效中</b>`;
+    return `<span style="color:var(--acc)">→ ${s.tag} ${lv(s.price)}（${s.dist_pct}%）</span>`;
+  }).join('　');
+}
 function pfCards(d){
   if(!(d.stocks||[]).length) return '持股清單是空的 — 到 <a href="http://edgexpert-dd4f.local:8090/" target=_blank>持股管理頁</a> 加入代號';
   return d.stocks.map(r=>{
@@ -172,7 +182,7 @@ function pfCards(d){
       <span>成交 ${lv(r.last)}　<span class="${cls(r.chg_pct)}">${fmt(r.chg_pct,'%')}</span>　${sig}</span></div>
     <table class=chk style="margin-top:8px"><tr>
       <td>🎯 停利</td><td>TP1 ${lv(L.tp1&&L.tp1.price)}（${L.tp1?L.tp1.rule:'—'}）<br>TP2 ${lv(L.tp2&&L.tp2.price)}（${L.tp2?L.tp2.rule:'—'}）</td></tr>
-    <tr><td>🛑 停損</td><td>短線 ${lv(L.stop_short&&L.stop_short.price)}（${L.stop_short?L.stop_short.rule:'—'}）<br>中線 ${lv(L.stop_mid&&L.stop_mid.price)}（${L.stop_mid?L.stop_mid.rule:'—'}）</td></tr>
+    <tr><td>🛑 停損階梯</td><td>${ladderHtml(L)}<br><span style="color:var(--mut);font-size:11px">${L.stop_mid?L.stop_mid.rule:'—'}${L.stop_next?'；跌破後下一道 '+lv(L.stop_next.price)+'（'+(L.stop_next.rule||'')+'）':''}</span></td></tr>
     <tr><td>🔥 熱度</td><td>${heatLbl}｜30天提及 ${heat.mentions_30d!=null?heat.mentions_30d:'—'} 次｜90天 ${heat.mentions_90d!=null?heat.mentions_90d:'—'} 次
       ${(heat.channels_30d||[]).length?'｜提及者：'+heat.channels_30d.join('、'):''}
       ${(heat.recent||[])[0]?`<br><span style="color:var(--mut);font-size:11px">${heat.recent[0].date} ${heat.recent[0].channel}：${heat.recent[0].snippet}…</span>`:''}</td></tr>
@@ -381,7 +391,7 @@ async function openPfDrawer(code){
   for(const [l,v,u] of cells) html+=`<div class=mini><div class=mv>${v!=null&&!isNaN(v)?Number(v).toLocaleString()+u:'—'}</div><div>${l}</div></div>`;
   html+=`</div>`;
   if(L.signals&&L.signals.length)html+=`<div style="margin-top:6px">${L.signals.map(x=>`<span class="tag t-ma">${x}</span>`).join(' ')}</div>`;
-  html+=`<div class=foot style="text-align:left;margin-top:6px">🎯 TP1 ${lv(L.tp1&&L.tp1.price)}｜TP2 ${lv(L.tp2&&L.tp2.price)}｜TP3 ${lv(L.tp3&&L.tp3.price)}<br>🛑 短線 ${lv(L.stop_short&&L.stop_short.price)}｜中線 ${lv(L.stop_mid&&L.stop_mid.price)}</div>`;
+  html+=`<div class=foot style="text-align:left;margin-top:6px">🎯 TP1 ${lv(L.tp1&&L.tp1.price)}｜TP2 ${lv(L.tp2&&L.tp2.price)}｜TP3 ${lv(L.tp3&&L.tp3.price)}<br>🛑 停損階梯：${ladderHtml(L)}</div>`;
   // 錨點交叉表（四方法＋共振）
   if(L.anchors&&L.anchors.length){
     html+=`<div style="margin-top:8px;font-size:11px"><b>🧭 目標價錨點交叉</b>（${L.anchors.length} 個方法；±2.5% 內≥2 方法＝共振）`;
