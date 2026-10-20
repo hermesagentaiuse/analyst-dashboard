@@ -13,7 +13,7 @@
   "tpex_common": 3709.1,
   "tpex_etf": 19.8
  },
- "fetched_at": "2026-10-20T08:19:32",
+ "fetched_at": "2026-10-20T13:23:18",
  "level": "🔴 過熱",
  "source": "TWSE legacy TOTAL 官方融資金額 + TPEx OpenAPI（2026-10-20 修正版：分母=實際借款，ETF=代號格式，含上櫃）"
 }
