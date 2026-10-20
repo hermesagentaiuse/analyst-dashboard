@@ -203,7 +203,7 @@
    "blave": 181.306
   }
  ],
- "fetched_at": "2026-10-20T15:49:45",
+ "fetched_at": "2026-10-20T16:56:28",
  "level": "🔴 過熱",
  "source": "TWSE legacy TOTAL 官方融資金額 + TPEx OpenAPI（2026-10-20 修正版：分母=實際借款，ETF=代號格式，含上櫃）"
 }
