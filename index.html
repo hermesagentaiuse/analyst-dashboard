@@ -253,10 +253,31 @@ function renderMacro(){
   if(MARGIN){
     const r=MARGIN.non_etf_ratio;
     const col=r>=180?'var(--dn)':r>=160?'#ff9f40':r>=140?'#e3b341':'var(--up)';
+    const P=MARGIN.published;
+    let pubLine='';
+    if(P&&P.wg_listed!=null){
+      pubLine=`<br>📌 網路公布(帳戶成本口径)：上市扣除ETF <b style="color:${P.wg_listed<150?'var(--dn)':P.wg_listed<165?'#ff9f40':'var(--tx)'}">${P.wg_listed}%</b>｜上櫃 ${P.wg_otc!=null?P.wg_otc+'%':'—'}<span class=mitem>（融資金額 ${P.wg_loan_億??'—'} 億／上櫃 ${P.wg_loan_otc_億??'—'} 億・玩股網 ${P.date||''}）</span>`;
+    }
+    // 30日 sparkline：玩股網上市扣除ETF vs 方法A（官方借款口径）
+    let spark='';
+    const S=(MARGIN.published_series||[]).filter(x=>x.wg_listed!=null);
+    if(S.length>=5){
+      const W=200,H=42,pad=3;
+      const vals=S.flatMap(x=>[x.wg_listed,x.blave].filter(v=>v!=null));
+      const lo=Math.min(...vals)-2,hi=Math.max(...vals)+2;
+      const X=i=>pad+i*(W-2*pad)/(S.length-1), Y=v=>H-pad-(v-lo)/(hi-lo)*(H-2*pad);
+      const poly=k=>S.map((x,i)=>x[k]!=null?`${X(i).toFixed(1)},${Y(x[k]).toFixed(1)}`:null).filter(Boolean).join(' ');
+      const lastWg=S[S.length-1].wg_listed, lastBl=S[S.length-1].blave;
+      spark=`<svg width="${W}" height="${H}" style="margin-top:4px">
+        <polyline points="${poly('blave')}" fill="none" stroke="#8b949e" stroke-width="1.2" stroke-dasharray="3 2"/>
+        <polyline points="${poly('wg_listed')}" fill="none" stroke="#58a6ff" stroke-width="1.6"/>
+        <text x="${W-2}" y="10" text-anchor="end" font-size="9" fill="#58a6ff">${lastWg!=null?lastWg+'%':''} 玩股網</text>
+        <text x="${W-2}" y="21" text-anchor="end" font-size="9" fill="#8b949e">${lastBl!=null?lastBl+'%':''} Blave</text></svg>`;
+    }
     cards.push(`<div class=mcard><div class=mt>💹 大盤融資維持率（扣除ETF）</div>
-      <div class=mv style="color:${col}">${r!=null?r+'%':'—'}</div>
-      <div class=ms>${MARGIN.level||''}｜保證金 ${MARGIN.margin_collateral_億??'—'} 億｜融資 ${MARGIN.margin_zhang?.toLocaleString?MARGIN.margin_zhang.toLocaleString():'—'} 張<br>
-      <span class=mitem>資料日 ${MARGIN.date||'—'}｜130%斷頭線 140%警戒 180%過熱｜${MARGIN.source||''}</span></div></div>`);
+      <div class=mv style="color:${col}">${r!=null?r+'%':'—'}<span class=mitem style="font-weight:400"> 官方借款口径A｜B ${MARGIN.method_b_non_etf!=null?MARGIN.method_b_non_etf+'%':'—'}</span></div>
+      <div class=ms>${MARGIN.level||''}｜保證金 ${MARGIN.margin_collateral_億??'—'} 億｜融資 ${MARGIN.margin_zhang?.toLocaleString?MARGIN.margin_zhang.toLocaleString():'—'} 張${pubLine}${spark}<br>
+      <span class=mitem>資料日 ${MARGIN.date||'—'}｜130%斷頭線 140%警戒 180%過熱｜實線=玩股網帳戶成本口径（媒體公布同源） 虛線=Blave市值口径（≈方法A）｜${MARGIN.source||''}</span></div></div>`);
   }
   if(BIZ){
     let lamps='';
