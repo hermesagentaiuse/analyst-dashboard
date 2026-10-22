@@ -96,7 +96,7 @@ a{color:var(--acc)}
 <div id="drawer"><button class="close" onclick="closeDrawer()">✕</button><div id="drawerBody"></div></div>
 <script>
 let MAN=null, cur=null, sortK='mentions', sortAsc=false, filters=new Set();
-let STATS={}, FUND={}, MENT=null, CHDATA={}, MARGIN=null, BIZ=null, PF=null, PFDATE=null;
+let STATS={}, FUND={}, MENT=null, CHDATA={}, MARGIN=null, BIZ=null, PF=null, PFDATE=null, FLOW=null;
 const fmt=(v,suf='')=>(v==null||isNaN(v))?'—':(Number(v).toFixed(suf==='%'?1:1)+suf);
 const cls=v=>v==null||isNaN(v)?'neu':(v>0?'up':v<0?'dn':'neu');
 
@@ -109,6 +109,7 @@ async function boot(){
   FUND=(await jget('data/fundamentals.json'))||{};
   MENT=await jget('data/mentions.json');
   MARGIN=await jget('data/margin_ratio.json');
+  FLOW=await jget('data/flow_trends.json');
   BIZ=await jget('data/biz_cycle.json');
   renderMacro();
   const chips=document.getElementById('chips');
@@ -162,6 +163,52 @@ function ladderHtml(L){
     if(i===first) return `<b style="color:#ff6b6b">▶ ${s.tag} ${lv(s.price)}（${s.dist_pct}%）生效中</b>`;
     return `<span style="color:var(--acc)">→ ${s.tag} ${lv(s.price)}（${s.dist_pct}%）</span>`;
   }).join('　');
+}
+// —— 法人×融資趨勢圖（純 SVG）：上=三大法人買賣超(千股)折線，下=融資餘額(張)面積 ——
+function flowChartHtml(code){
+  if(!FLOW||!FLOW.codes||!FLOW.codes[code])return `<div class=neu>無法人/融資趨勢資料（新代號於下次夜間排程後自動補齊）</div>`;
+  const arr=FLOW.codes[code], dates=FLOW.dates;
+  const n=dates.length; if(!n)return '';
+  const W=560,h1=130,h2=90,padL=44,padR=8,padT=14,padB=16;
+  const x=i=>padL+(W-padL-padR)*(n===1?0.5:i/(n-1));
+  function series(j){return arr.map(r=>r?r[j]:null);}
+  function path(vals,ymin,ymax,h,off){
+    let d='',pen=false;
+    vals.forEach((v,i)=>{
+      if(v==null){pen=false;return;}
+      const y=off+padT+(h-padT-padB)*(1-(v-ymin)/((ymax-ymin)||1));
+      d+=(pen?'L':'M')+x(i).toFixed(1)+','+y.toFixed(1);pen=true;
+    });
+    return d;
+  }
+  const instCols=[['f','#4da3ff','外資'],['t','#ffb84d','投信'],['d','#b07dff','自營']];
+  const ivs=instCols.map(c=>series(c[0]==='f'?0:c[0]==='t'?1:2));
+  let lo=0,hi=0;
+  ivs.forEach(vs=>vs.forEach(v=>{if(v!=null){lo=Math.min(lo,v);hi=Math.max(hi,v);}}));
+  if(hi===lo&&lo===0){hi=1;lo=-1;}
+  const mvs=series(3);
+  let mlo=Math.min(...mvs.filter(v=>v!=null)), mhi=Math.max(...mvs.filter(v=>v!=null));
+  if(!isFinite(mlo)){mlo=0;mhi=1;}
+  if(mhi===mlo){mhi=mlo+1;}
+  const H=h1+8+h2;
+  let svg=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">`;
+  // zero line + 圖表一
+  const zy=padT+(h1-padT-padB)*(1-(0-lo)/((hi-lo)||1));
+  svg+=`<line x1="${padL}" y1="${zy}" x2="${W-padR}" y2="${zy}" stroke="#333" stroke-dasharray="3 3"/>`;
+  svg+=`<text x="2" y="${(padT+6).toFixed(0)}" fill="#888" font-size="9">${lv(hi)}</text><text x="2" y="${(h1-4).toFixed(0)}" fill="#888" font-size="9">${lv(lo)}</text>`;
+  ivs.forEach((vs,k)=>{svg+=`<path d="${path(vs,lo,hi,h1,0)}" fill="none" stroke="${instCols[k][1]}" stroke-width="1.6"/>`;});
+  // 圖表二：融資餘額面積
+  const off2=h1+8;
+  svg+=`<path d="${path(mvs,mlo,mhi,h2,off2)}" fill="none" stroke="#ff6b6b" stroke-width="1.6"/>`;
+  svg+=`<text x="2" y="${(off2+padT+6).toFixed(0)}" fill="#888" font-size="9">${lv(mhi)}</text><text x="2" y="${(off2+h2-4).toFixed(0)}" fill="#888" font-size="9">${lv(mlo)}</text>`;
+  // x 軸日期（首、中、末）
+  [[0,'start'],[Math.floor((n-1)/2),'mid'],[n-1,'end']].forEach(([i])=>{
+    svg+=`<text x="${x(i).toFixed(1)}" y="${H-3}" fill="#888" font-size="9" text-anchor="${i===0?'start':i===n-1?'end':'middle'}">${dates[i].slice(5)}</text>`;
+  });
+  svg+=`</svg>`;
+  const last=arr[n-1]||[];
+  const legend=`<span style="color:#4da3ff">■外資 ${last[0]!=null?lv(last[0]):'—'}</span>　<span style="color:#ffb84d">■投信 ${last[1]!=null?lv(last[1]):'—'}</span>　<span style="color:#b07dff">■自營 ${last[2]!=null?lv(last[2]):'—'}</span>（千股，${dates[n-1]||''}）　<span style="color:#ff6b6b">▬融資餘額 ${last[3]!=null?lv(last[3]):'—'} 張</span>`;
+  return svg+`<div style="font-size:10px;margin-top:2px">${legend}</div>`;
 }
 function pfCards(d){
   if(!(d.stocks||[]).length) return '持股清單是空的 — 到 <a href="http://edgexpert-dd4f.local:8090/" target=_blank>持股管理頁</a> 加入代號';
@@ -409,7 +456,10 @@ async function openDrawer(code){
       html+=`<div class=ev><span class=who>${e.channel_name}</span> ${e.date}${vlink}<div class=sn>${(e.snippet||'').replace(/</g,'&lt;')}</div></div>`;
     }
   } else html+=`<div class=neu>時間軸資料載入中…</div>`;
-  html+=`</div></div>`;
+  html+=`</div>`;
+  // 法人×融資趨勢圖
+  html+=`<div class=sec><h4>🏦 法人×融資趨勢（近 60 交易日）</h4>${flowChartHtml(code)}<div class=foot style="text-align:left;margin-top:4px">上：三大法人每日買賣超（千股，無進出＝斷線非 0）；下：融資餘額（張）。來源：證交所/櫃買每日公告，夜間排程更新</div></div>`;
+  html+=`</div>`;
   document.getElementById('drawerBody').innerHTML=html;
   document.getElementById('drawer').classList.add('open');
   document.getElementById('backdrop').classList.add('show');
@@ -476,6 +526,8 @@ async function openPfDrawer(code){
   html+=`</div></div>`;
   // 同業
   if(r.peers)html+=`<div class=sec><h4>🔄 同業比較（資金輪動）</h4><pre style="font-size:11px;white-space:pre-wrap">${r.peers.replace(/</g,'&lt;')}</pre></div>`;
+  // 法人×融資趨勢圖
+  html+=`<div class=sec><h4>🏦 法人×融資趨勢（近 60 交易日）</h4>${flowChartHtml(code)}<div class=foot style="text-align:left;margin-top:4px">上：三大法人每日買賣超（千股，無進出＝斷線非 0）；下：融資餘額（張）。來源：證交所/櫃買每日公告，夜間排程更新</div></div>`;
   document.getElementById('drawerBody').innerHTML=html;
   document.getElementById('drawer').classList.add('open');
   document.getElementById('backdrop').classList.add('show');
