@@ -183,8 +183,15 @@ function flowChartHtml(code){
   }
   const instCols=[['f','#4da3ff','外資'],['t','#ffb84d','投信'],['d','#b07dff','自營']];
   const ivs=instCols.map(c=>series(c[0]==='f'?0:c[0]==='t'?1:2));
+  // 法人合計：三家加總（全 null 的日子才 null）
+  const tvals=arr.map(r=>{
+    if(!r)return null;
+    const parts=[r[0],r[1],r[2]].filter(v=>v!=null);
+    return parts.length?parts.reduce((a,b)=>a+b,0):null;
+  });
   let lo=0,hi=0;
   ivs.forEach(vs=>vs.forEach(v=>{if(v!=null){lo=Math.min(lo,v);hi=Math.max(hi,v);}}));
+  tvals.forEach(v=>{if(v!=null){lo=Math.min(lo,v);hi=Math.max(hi,v);}});
   if(hi===lo&&lo===0){hi=1;lo=-1;}
   const mvs=series(3);
   let mlo=Math.min(...mvs.filter(v=>v!=null)), mhi=Math.max(...mvs.filter(v=>v!=null));
@@ -197,6 +204,7 @@ function flowChartHtml(code){
   svg+=`<line x1="${padL}" y1="${zy}" x2="${W-padR}" y2="${zy}" stroke="#333" stroke-dasharray="3 3"/>`;
   svg+=`<text x="2" y="${(padT+6).toFixed(0)}" fill="#888" font-size="9">${lv(hi)}</text><text x="2" y="${(h1-4).toFixed(0)}" fill="#888" font-size="9">${lv(lo)}</text>`;
   ivs.forEach((vs,k)=>{svg+=`<path d="${path(vs,lo,hi,h1,0)}" fill="none" stroke="${instCols[k][1]}" stroke-width="1.6"/>`;});
+  svg+=`<path d="${path(tvals,lo,hi,h1,0)}" fill="none" stroke="#e8e8e8" stroke-width="2.4"/>`;
   // 圖表二：融資餘額面積
   const off2=h1+8;
   svg+=`<path d="${path(mvs,mlo,mhi,h2,off2)}" fill="none" stroke="#ff6b6b" stroke-width="1.6"/>`;
@@ -207,7 +215,8 @@ function flowChartHtml(code){
   });
   svg+=`</svg>`;
   const last=arr[n-1]||[];
-  const legend=`<span style="color:#4da3ff">■外資 ${last[0]!=null?lv(last[0]):'—'}</span>　<span style="color:#ffb84d">■投信 ${last[1]!=null?lv(last[1]):'—'}</span>　<span style="color:#b07dff">■自營 ${last[2]!=null?lv(last[2]):'—'}</span>（千股，${dates[n-1]||''}）　<span style="color:#ff6b6b">▬融資餘額 ${last[3]!=null?lv(last[3]):'—'} 張</span>`;
+  const tv=tvals[n-1];
+  const legend=`<span style="color:#e8e8e8">━合計 ${tv!=null?lv(tv):'—'}</span>　<span style="color:#4da3ff">■外資 ${last[0]!=null?lv(last[0]):'—'}</span>　<span style="color:#ffb84d">■投信 ${last[1]!=null?lv(last[1]):'—'}</span>　<span style="color:#b07dff">■自營 ${last[2]!=null?lv(last[2]):'—'}</span>（千股，${dates[n-1]||''}）　<span style="color:#ff6b6b">▬融資餘額 ${last[3]!=null?lv(last[3]):'—'} 張</span>`;
   return svg+`<div style="font-size:10px;margin-top:2px">${legend}</div>`;
 }
 function pfCards(d){
