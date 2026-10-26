@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-10-25T20:03:04.479977+08:00",
- "report_date": "2026-10-25",
+ "generated_at": "2026-10-26T20:02:11.569120+08:00",
+ "report_date": "2026-10-26",
  "count": 6,
  "dates": [
   "2026-10-16",
@@ -12,7 +12,8 @@
   "2026-10-22",
   "2026-10-23",
   "2026-10-24",
-  "2026-10-25"
+  "2026-10-25",
+  "2026-10-26"
  ],
  "stocks": [
   {
@@ -171,7 +172,7 @@
    "fund": {
     "code": "2308",
     "name": "台達電",
-    "checked_at": "2026-10-25T12:01:35Z",
+    "checked_at": "2026-10-26T12:01:02Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -290,13 +291,13 @@
    "pe": 72.24,
    "pb": 13.93,
    "divyield": 0.18,
-   "ret_90d_pct": 20.39,
+   "ret_90d_pct": 11.17,
    "max_dd_pct": -35.7,
-   "pos_in_range_pct": 98.0,
-   "hi90": 1185.0,
+   "pos_in_range_pct": 62.0,
+   "hi90": 1325.0,
    "lo90": 688.0,
    "heat": {
-    "mentions_30d": 20,
+    "mentions_30d": 19,
     "mentions_90d": 40,
     "channels_30d": [
      "何基鼎",
@@ -323,8 +324,8 @@
     ]
    },
    "rel_strength": {
-    "diff_90d_pct": 18.0,
-    "label": "顯著強勢（資金明顯流入）"
+    "diff_90d_pct": 8.8,
+    "label": "相對強勢"
    },
    "levels": {
     "stop_short": {
@@ -339,33 +340,27 @@
       "breached": true
      },
      {
-      "price": 1050.38,
-      "tag": "MA60",
-      "dist_pct": -3.2,
-      "breached": false
-     },
-     {
-      "price": 1032.4,
-      "tag": "現價-1×ATR",
-      "dist_pct": -4.8,
-      "breached": false
-     },
-     {
-      "price": 979.9,
-      "tag": "現價-2×ATR",
-      "dist_pct": -9.7,
-      "breached": false
-     },
-     {
-      "price": 927.3,
-      "tag": "現價-3×ATR",
-      "dist_pct": -14.5,
-      "breached": false
-     },
-     {
-      "price": 902.0,
+      "price": 1055.0,
       "tag": "20日低",
-      "dist_pct": -16.9,
+      "dist_pct": -2.8,
+      "breached": false
+     },
+     {
+      "price": 1007.1,
+      "tag": "現價-1×ATR",
+      "dist_pct": -7.2,
+      "breached": false
+     },
+     {
+      "price": 929.3,
+      "tag": "現價-2×ATR",
+      "dist_pct": -14.4,
+      "breached": false
+     },
+     {
+      "price": 851.4,
+      "tag": "現價-3×ATR",
+      "dist_pct": -21.5,
       "breached": false
      },
      {
@@ -376,33 +371,33 @@
      }
     ],
     "stop_mid": {
-     "price": 1050.38,
-     "rule": "跌破最近下方支撐 MA60，停損出場"
+     "price": 1055.0,
+     "rule": "跌破最近下方支撐 20日低，停損出場"
     },
     "stop_next": {
-     "price": 1032.4,
-     "rule": "跌破 MA60 後的下一道支撐 現價-1×ATR"
+     "price": 1007.1,
+     "rule": "跌破 20日低 後的下一道支撐 現價-1×ATR"
     },
     "anchors": [
      {
       "method": "①前高(90日)",
-      "price": 1185.0
+      "price": 1325.0
      },
      {
       "method": "②量度目標(箱高投影)",
-      "price": 1682.0
+      "price": 1962.0
      },
      {
       "method": "③ATR×3(波動)",
-      "price": 1242.7
+      "price": 1318.6
      },
      {
       "method": "④斐波1.272延伸",
-      "price": 1320.2
+      "price": 1498.3
      },
      {
       "method": "④斐波1.618延伸",
-      "price": 1492.1
+      "price": 1718.7
      },
      {
       "method": "⑤整數關卡",
@@ -411,25 +406,33 @@
     ],
     "confluence": [
      {
-      "price": 1496.0,
+      "price": 1321.8,
       "methods": [
-       "④斐波1.618延伸",
+       "①前高(90日)",
+       "③ATR×3(波動)"
+      ],
+      "n": 2
+     },
+     {
+      "price": 1499.2,
+      "methods": [
+       "④斐波1.272延伸",
        "⑤整數關卡"
       ],
       "n": 2
      }
     ],
     "tp1": {
-     "price": 1185.0,
-     "rule": "①前高(90日)"
+     "price": 1321.8,
+     "rule": "共振×2：①前高(90日)＋③ATR×3(波動)"
     },
     "tp2": {
-     "price": 1242.7,
-     "rule": "③ATR×3(波動)"
+     "price": 1499.2,
+     "rule": "共振×2：④斐波1.272延伸＋⑤整數關卡"
     },
     "tp3": {
-     "price": 1496.0,
-     "rule": "共振×2：④斐波1.618延伸＋⑤整數關卡"
+     "price": 1718.7,
+     "rule": "④斐波1.618延伸"
     },
     "signals": [
      "MACD 空頭",
@@ -440,7 +443,7 @@
    "fund": {
     "code": "3037",
     "name": "欣興",
-    "checked_at": "2026-10-25T12:01:54Z",
+    "checked_at": "2026-10-26T12:01:08Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -547,9 +550,9 @@
    "pe": 5.9,
    "pb": 2.5,
    "divyield": 8.93,
-   "ret_90d_pct": 36.38,
-   "max_dd_pct": -19.9,
-   "pos_in_range_pct": 52.0,
+   "ret_90d_pct": 20.06,
+   "max_dd_pct": -29.5,
+   "pos_in_range_pct": 29.0,
    "hi90": 2610.0,
    "lo90": 1532.5385,
    "heat": {
@@ -577,7 +580,7 @@
     ]
    },
    "rel_strength": {
-    "diff_90d_pct": 34.0,
+    "diff_90d_pct": 17.7,
     "label": "顯著強勢（資金明顯流入）"
    },
    "levels": {
@@ -593,33 +596,27 @@
       "breached": true
      },
      {
-      "price": 2090.0,
-      "tag": "20日低",
-      "dist_pct": 13.6,
-      "breached": true
-     },
-     {
       "price": 2075.25,
       "tag": "MA20",
       "dist_pct": 12.8,
       "breached": true
      },
      {
-      "price": 1748.9,
+      "price": 1840.0,
+      "tag": "20日低",
+      "dist_pct": 0.0,
+      "breached": true
+     },
+     {
+      "price": 1723.6,
       "tag": "現價-1×ATR",
-      "dist_pct": -5.0,
+      "dist_pct": -6.3,
       "breached": false
      },
      {
-      "price": 1657.9,
+      "price": 1607.1,
       "tag": "現價-2×ATR",
-      "dist_pct": -9.9,
-      "breached": false
-     },
-     {
-      "price": 1566.8,
-      "tag": "現價-3×ATR",
-      "dist_pct": -14.8,
+      "dist_pct": -12.7,
       "breached": false
      },
      {
@@ -627,14 +624,20 @@
       "tag": "90日低",
       "dist_pct": -16.7,
       "breached": false
+     },
+     {
+      "price": 1490.7,
+      "tag": "現價-3×ATR",
+      "dist_pct": -19.0,
+      "breached": false
      }
     ],
     "stop_mid": {
-     "price": 1748.9,
+     "price": 1723.6,
      "rule": "跌破最近下方支撐 現價-1×ATR，停損出場"
     },
     "stop_next": {
-     "price": 1657.9,
+     "price": 1607.1,
      "rule": "跌破 現價-1×ATR 後的下一道支撐 現價-2×ATR"
     },
     "anchors": [
@@ -648,7 +651,7 @@
      },
      {
       "method": "③ATR×3(波動)",
-      "price": 2113.2
+      "price": 2189.3
      },
      {
       "method": "④斐波1.272延伸",
@@ -669,7 +672,7 @@
      "rule": "⑤整數關卡"
     },
     "tp2": {
-     "price": 2113.2,
+     "price": 2189.3,
      "rule": "③ATR×3(波動)"
     },
     "tp3": {
@@ -686,7 +689,7 @@
    "fund": {
     "code": "6669",
     "name": "緯穎",
-    "checked_at": "2026-10-25T12:02:05Z",
+    "checked_at": "2026-10-26T12:01:14Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -920,7 +923,7 @@
    "fund": {
     "code": "1519",
     "name": "華城",
-    "checked_at": "2026-10-25T12:02:16Z",
+    "checked_at": "2026-10-26T12:01:19Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -1173,7 +1176,7 @@
    "fund": {
     "code": "8299",
     "name": "群聯",
-    "checked_at": "2026-10-25T12:02:22Z",
+    "checked_at": "2026-10-26T12:01:35Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -1438,7 +1441,7 @@
    "fund": {
     "code": "2404",
     "name": "漢唐",
-    "checked_at": "2026-10-25T12:02:40Z",
+    "checked_at": "2026-10-26T12:01:51Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
