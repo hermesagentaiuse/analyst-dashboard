@@ -1,33 +1,27 @@
 {
- "date": "2026-11-03",
- "non_etf_ratio": 170.3,
- "margin_collateral_億": 12787.8,
- "margin_zhang": 11717859,
- "etf_ratio": 170.2,
- "method_b_non_etf": 155.3,
- "official_loan_仟元": 599774466,
+ "date": "2026-11-04",
+ "non_etf_ratio": 172.0,
+ "margin_collateral_億": 12860.8,
+ "margin_zhang": 11750305,
+ "etf_ratio": 171.8,
+ "method_b_non_etf": 156.5,
+ "official_loan_仟元": 596945870,
  "collateral_breakdown": {
-  "total": 12787.8,
-  "twse_common": 9229.6,
-  "twse_etf": 526.6,
+  "total": 12860.8,
+  "twse_common": 9279.2,
+  "twse_etf": 550.0,
   "tpex_common": 3014.6,
   "tpex_etf": 17.1
  },
  "published": {
-  "date": "2026-11-03",
-  "wg_listed": 142.09,
+  "date": "2026-11-04",
+  "wg_listed": 143.56,
   "wg_otc": null,
-  "wg_loan_億": 5640.0,
+  "wg_loan_億": 5598.4,
   "wg_loan_otc_億": null,
-  "blave": 162.676
+  "blave": 164.672
  },
  "published_series": [
-  {
-   "date": "2026-09-16",
-   "wg_listed": 161.38,
-   "wg_otc": 166.51,
-   "blave": 183.932
-  },
   {
    "date": "2026-09-17",
    "wg_listed": 161.45,
@@ -169,41 +163,47 @@
   {
    "date": "2026-10-27",
    "wg_listed": 154.77,
-   "wg_otc": 0.0,
+   "wg_otc": 158.2,
    "blave": 176.093
   },
   {
    "date": "2026-10-28",
    "wg_listed": 161.51,
-   "wg_otc": 6255.15,
+   "wg_otc": 166.58,
    "blave": 183.265
   },
   {
    "date": "2026-10-29",
    "wg_listed": 157.21,
-   "wg_otc": 2415.32,
+   "wg_otc": 163.85,
    "blave": 178.446
   },
   {
    "date": "2026-10-30",
    "wg_listed": 150.94,
-   "wg_otc": 1051.47,
+   "wg_otc": 156.03,
    "blave": 171.754
   },
   {
    "date": "2026-11-02",
    "wg_listed": 150.96,
-   "wg_otc": 712.94,
+   "wg_otc": 155.92,
    "blave": 171.711
   },
   {
    "date": "2026-11-03",
    "wg_listed": 142.09,
-   "wg_otc": null,
+   "wg_otc": 144.67,
    "blave": 162.676
+  },
+  {
+   "date": "2026-11-04",
+   "wg_listed": 143.56,
+   "wg_otc": null,
+   "blave": 164.672
   }
  ],
- "fetched_at": "2026-11-04T17:02:02",
+ "fetched_at": "2026-11-04T22:00:09",
  "level": "🟠 偏熱",
  "source": "TWSE legacy TOTAL 官方融資金額 + TPEx OpenAPI（2026-10-20 修正版：分母=實際借款，ETF=代號格式，含上櫃）"
 }
