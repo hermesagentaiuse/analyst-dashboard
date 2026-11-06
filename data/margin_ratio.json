@@ -1,15 +1,15 @@
 {
- "date": "2026-11-04",
- "non_etf_ratio": 171.4,
- "margin_collateral_億": 12571.6,
- "margin_zhang": 11719281,
- "etf_ratio": 171.3,
- "method_b_non_etf": 153.6,
- "official_loan_仟元": 596945870,
+ "date": "2026-11-05",
+ "non_etf_ratio": 164.1,
+ "margin_collateral_億": 11718.7,
+ "margin_zhang": 11624298,
+ "etf_ratio": 164.2,
+ "method_b_non_etf": 145.9,
+ "official_loan_仟元": 576409039,
  "collateral_breakdown": {
-  "total": 12571.6,
-  "twse_common": 9279.2,
-  "twse_etf": 550.0,
+  "total": 11718.7,
+  "twse_common": 8437.7,
+  "twse_etf": 538.6,
   "tpex_common": 2724.2,
   "tpex_etf": 18.2
  },
@@ -203,7 +203,7 @@
    "blave": 164.672
   }
  ],
- "fetched_at": "2026-11-05T16:39:09",
+ "fetched_at": "2026-11-06T07:38:29",
  "level": "🟠 偏熱",
  "source": "TWSE legacy TOTAL 官方融資金額 + TPEx OpenAPI（2026-10-20 修正版：分母=實際借款，ETF=代號格式，含上櫃）"
 }
