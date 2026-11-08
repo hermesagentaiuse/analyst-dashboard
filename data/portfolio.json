@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-07T20:01:41.133341+08:00",
- "report_date": "2026-11-07",
+ "generated_at": "2026-11-08T20:02:03.062798+08:00",
+ "report_date": "2026-11-08",
  "count": 6,
  "dates": [
   "2026-10-16",
@@ -25,7 +25,8 @@
   "2026-11-04",
   "2026-11-05",
   "2026-11-06",
-  "2026-11-07"
+  "2026-11-07",
+  "2026-11-08"
  ],
  "stocks": [
   {
@@ -51,14 +52,14 @@
    "pe": 31.68,
    "pb": 8.61,
    "divyield": 1.1,
-   "ret_90d_pct": -29.37,
-   "max_dd_pct": -34.9,
+   "ret_90d_pct": -44.18,
+   "max_dd_pct": -48.5,
    "pos_in_range_pct": 0.0,
    "hi90": 2050.0,
-   "lo90": 1335.0,
+   "lo90": 1055.0,
    "heat": {
-    "mentions_30d": 15,
-    "mentions_90d": 30,
+    "mentions_30d": 16,
+    "mentions_90d": 31,
     "channels_30d": [
      "何基鼎",
      "郭哲榮",
@@ -66,24 +67,24 @@
     ],
     "recent": [
      {
+      "date": "2026-11-08",
+      "channel": "鐘崑禎",
+      "snippet": "是反彈的空間最大的 但它會是最穩健的 包含像是說台積電 鴻海 聯發科 還有像是說2308的台大電 2303的聯電 這些都是 這些都算大型權值股 那貴買指數的權值股 最大"
+     },
+     {
+      "date": "2026-11-08",
+      "channel": "鐘崑禎",
+      "snippet": "2,050 | **-48.5%**"
+     },
+     {
       "date": "2026-11-07",
       "channel": "何基鼎",
       "snippet": "1,055 | 1,270→1,055"
-     },
-     {
-      "date": "2026-11-06",
-      "channel": "鐘崑禎",
-      "snippet": "這都可以去做留意 那像是說2454的聯發科 可能說以全時股來講 位階稍高一點點 2308的台達電 快要跌破千元了 如果跌破千元 他的預估本益比大概剩下 13倍 12倍 "
-     },
-     {
-      "date": "2026-11-06",
-      "channel": "鐘崑禎",
-      "snippet": "接近跌破千元，預估本益比 12~13 倍 | 1,055"
      }
     ]
    },
    "rel_strength": {
-    "diff_90d_pct": -16.6,
+    "diff_90d_pct": -31.4,
     "label": "顯著弱勢（資金流失警訊）"
    },
    "levels": {
@@ -105,36 +106,36 @@
       "breached": true
      },
      {
-      "price": 1335.0,
+      "price": 1055.0,
       "tag": "20日低",
-      "dist_pct": 26.5,
+      "dist_pct": 0.0,
       "breached": true
      },
      {
-      "price": 968.6,
+      "price": 964.6,
       "tag": "現價-1×ATR",
-      "dist_pct": -8.2,
+      "dist_pct": -8.6,
       "breached": false
      },
      {
-      "price": 882.1,
+      "price": 874.3,
       "tag": "現價-2×ATR",
-      "dist_pct": -16.4,
+      "dist_pct": -17.1,
       "breached": false
      },
      {
-      "price": 795.7,
+      "price": 783.9,
       "tag": "現價-3×ATR",
-      "dist_pct": -24.6,
+      "dist_pct": -25.7,
       "breached": false
      }
     ],
     "stop_mid": {
-     "price": 968.6,
+     "price": 964.6,
      "rule": "跌破最近下方支撐 現價-1×ATR，停損出場"
     },
     "stop_next": {
-     "price": 882.1,
+     "price": 874.3,
      "rule": "跌破 現價-1×ATR 後的下一道支撐 現價-2×ATR"
     },
     "anchors": [
@@ -144,19 +145,19 @@
      },
      {
       "method": "②量度目標(箱高投影)",
-      "price": 2765.0
+      "price": 3045.0
      },
      {
       "method": "③ATR×3(波動)",
-      "price": 1314.3
+      "price": 1326.1
      },
      {
       "method": "④斐波1.272延伸",
-      "price": 2244.5
+      "price": 2320.6
      },
      {
       "method": "④斐波1.618延伸",
-      "price": 2491.9
+      "price": 2664.9
      },
      {
       "method": "⑤整數關卡",
@@ -165,7 +166,7 @@
     ],
     "confluence": [],
     "tp1": {
-     "price": 1314.3,
+     "price": 1326.1,
      "rule": "③ATR×3(波動)"
     },
     "tp2": {
@@ -187,7 +188,7 @@
    "fund": {
     "code": "2308",
     "name": "台達電",
-    "checked_at": "2026-11-07T12:01:09Z",
+    "checked_at": "2026-11-08T12:01:21Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -312,14 +313,14 @@
    "pe": 37.63,
    "pb": 6.72,
    "divyield": 0.27,
-   "ret_90d_pct": 9.52,
-   "max_dd_pct": -26.5,
-   "pos_in_range_pct": 47.0,
+   "ret_90d_pct": -19.49,
+   "max_dd_pct": -45.1,
+   "pos_in_range_pct": 6.0,
    "hi90": 1325.0,
    "lo90": 688.0,
    "heat": {
-    "mentions_30d": 21,
-    "mentions_90d": 43,
+    "mentions_30d": 23,
+    "mentions_90d": 45,
     "channels_30d": [
      "何基鼎",
      "張震",
@@ -328,25 +329,25 @@
     ],
     "recent": [
      {
+      "date": "2026-11-08",
+      "channel": "鐘崑禎",
+      "snippet": "這也算是AI的剛需 那還有像是說比較偏下游的 3189的景碩 8046的南電 跟3037的新興 這一串也是一樣要稍微去留意一下 因為說有一些PCB廠其實 它原本的 因為"
+     },
+     {
+      "date": "2026-11-08",
+      "channel": "鐘崑禎",
+      "snippet": "1,325 | -45.1%"
+     },
+     {
       "date": "2026-11-06",
       "channel": "鐘崑禎",
       "snippet": "一度跌停板也是跌破了年限 2454的聯發科 一度也是打到跌停板 3189的景碩 3037的新興 8046的南電 2327的國巨 2492的華新科 通通一度都打到跌停板 "
-     },
-     {
-      "date": "2026-11-05",
-      "channel": "鐘崑禎",
-      "snippet": "一點 就不建議去做低階 還有ABF載板 其實我也會比定 比較沒這麼建議 像景碩 3037的星星 8046的南電 因為它跟年限 其實距離還有一小段 這個我就比較不會這麼建"
-     },
-     {
-      "date": "2026-11-04",
-      "channel": "鐘崑禎",
-      "snippet": "來看 3000以下都不貴 真的3000以下都算是超跌 再來像是說 3189錦碩 3037的新興 8046的南電 總共幾乎都跌停半 這些有拉回來 都可以去留意它的買點 2"
      }
     ]
    },
    "rel_strength": {
-    "diff_90d_pct": 22.3,
-    "label": "顯著強勢（資金明顯流入）"
+    "diff_90d_pct": -6.7,
+    "label": "相對弱勢"
    },
    "levels": {
     "stop_short": {
@@ -361,9 +362,9 @@
       "breached": true
      },
      {
-      "price": 989.0,
+      "price": 727.0,
       "tag": "20日低",
-      "dist_pct": 36.0,
+      "dist_pct": 0.0,
       "breached": true
      },
      {
@@ -373,21 +374,21 @@
       "breached": false
      },
      {
-      "price": 644.8,
+      "price": 638.8,
       "tag": "現價-1×ATR",
-      "dist_pct": -11.3,
+      "dist_pct": -12.1,
       "breached": false
      },
      {
-      "price": 562.6,
+      "price": 550.6,
       "tag": "現價-2×ATR",
-      "dist_pct": -22.6,
+      "dist_pct": -24.3,
       "breached": false
      },
      {
-      "price": 480.4,
+      "price": 462.4,
       "tag": "現價-3×ATR",
-      "dist_pct": -33.9,
+      "dist_pct": -36.4,
       "breached": false
      }
     ],
@@ -396,7 +397,7 @@
      "rule": "跌破最近下方支撐 90日低，停損出場"
     },
     "stop_next": {
-     "price": 644.8,
+     "price": 638.8,
      "rule": "跌破 90日低 後的下一道支撐 現價-1×ATR"
     },
     "anchors": [
@@ -410,7 +411,7 @@
      },
      {
       "method": "③ATR×3(波動)",
-      "price": 973.6
+      "price": 991.6
      },
      {
       "method": "④斐波1.272延伸",
@@ -425,18 +426,27 @@
       "price": 1000.0
      }
     ],
-    "confluence": [],
+    "confluence": [
+     {
+      "price": 995.8,
+      "methods": [
+       "③ATR×3(波動)",
+       "⑤整數關卡"
+      ],
+      "n": 2
+     }
+    ],
     "tp1": {
-     "price": 973.6,
-     "rule": "③ATR×3(波動)"
+     "price": 995.8,
+     "rule": "共振×2：③ATR×3(波動)＋⑤整數關卡"
     },
     "tp2": {
-     "price": 1000.0,
-     "rule": "⑤整數關卡"
-    },
-    "tp3": {
      "price": 1325.0,
      "rule": "①前高(90日)"
+    },
+    "tp3": {
+     "price": 1498.3,
+     "rule": "④斐波1.272延伸"
     },
     "signals": [
      "RSI 24.08 超賣",
@@ -448,7 +458,7 @@
    "fund": {
     "code": "3037",
     "name": "欣興",
-    "checked_at": "2026-11-07T12:01:11Z",
+    "checked_at": "2026-11-08T12:01:25Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -579,7 +589,7 @@
    "hi90": 2610.0,
    "lo90": 1545.9231,
    "heat": {
-    "mentions_30d": 14,
+    "mentions_30d": 13,
     "mentions_90d": 36,
     "channels_30d": [
      "何基鼎",
@@ -713,7 +723,7 @@
    "fund": {
     "code": "6669",
     "name": "緯穎",
-    "checked_at": "2026-11-07T12:01:14Z",
+    "checked_at": "2026-11-08T12:01:31Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -961,7 +971,7 @@
    "fund": {
     "code": "1519",
     "name": "華城",
-    "checked_at": "2026-11-07T12:01:14Z",
+    "checked_at": "2026-11-08T12:01:32Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -1197,7 +1207,7 @@
    "fund": {
     "code": "8299",
     "name": "群聯",
-    "checked_at": "2026-11-07T12:01:15Z",
+    "checked_at": "2026-11-08T12:01:34Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -1321,11 +1331,11 @@
    "pe": 13.36,
    "pb": 9.34,
    "divyield": 4.51,
-   "ret_90d_pct": -12.6,
-   "max_dd_pct": -21.8,
-   "pos_in_range_pct": 21.0,
+   "ret_90d_pct": -27.97,
+   "max_dd_pct": -33.6,
+   "pos_in_range_pct": 0.0,
    "hi90": 1335.0,
-   "lo90": 1005.0,
+   "lo90": 886.0,
    "heat": {
     "mentions_30d": 2,
     "mentions_90d": 4,
@@ -1346,8 +1356,8 @@
     ]
    },
    "rel_strength": {
-    "diff_90d_pct": 0.1,
-    "label": "與大盤同步"
+    "diff_90d_pct": -15.2,
+    "label": "顯著弱勢（資金流失警訊）"
    },
    "levels": {
     "stop_short": {
@@ -1368,42 +1378,36 @@
       "breached": true
      },
      {
-      "price": 1075.0,
+      "price": 886.0,
       "tag": "20日低",
-      "dist_pct": 21.3,
+      "dist_pct": 0.0,
       "breached": true
      },
      {
-      "price": 1005.0,
-      "tag": "90日低",
-      "dist_pct": 13.4,
-      "breached": true
-     },
-     {
-      "price": 837.8,
+      "price": 839.1,
       "tag": "現價-1×ATR",
-      "dist_pct": -5.4,
+      "dist_pct": -5.3,
       "breached": false
      },
      {
-      "price": 789.6,
+      "price": 792.1,
       "tag": "現價-2×ATR",
-      "dist_pct": -10.9,
+      "dist_pct": -10.6,
       "breached": false
      },
      {
-      "price": 741.4,
+      "price": 745.2,
       "tag": "現價-3×ATR",
-      "dist_pct": -16.3,
+      "dist_pct": -15.9,
       "breached": false
      }
     ],
     "stop_mid": {
-     "price": 837.8,
+     "price": 839.1,
      "rule": "跌破最近下方支撐 現價-1×ATR，停損出場"
     },
     "stop_next": {
-     "price": 789.6,
+     "price": 792.1,
      "rule": "跌破 現價-1×ATR 後的下一道支撐 現價-2×ATR"
     },
     "anchors": [
@@ -1413,19 +1417,19 @@
      },
      {
       "method": "②量度目標(箱高投影)",
-      "price": 1665.0
+      "price": 1784.0
      },
      {
       "method": "③ATR×3(波動)",
-      "price": 1030.6
+      "price": 1026.8
      },
      {
       "method": "④斐波1.272延伸",
-      "price": 1424.8
+      "price": 1457.1
      },
      {
       "method": "④斐波1.618延伸",
-      "price": 1538.9
+      "price": 1612.5
      },
      {
       "method": "⑤整數關卡",
@@ -1438,7 +1442,7 @@
      "rule": "⑤整數關卡"
     },
     "tp2": {
-     "price": 1030.6,
+     "price": 1026.8,
      "rule": "③ATR×3(波動)"
     },
     "tp3": {
@@ -1455,7 +1459,7 @@
    "fund": {
     "code": "2404",
     "name": "漢唐",
-    "checked_at": "2026-11-07T12:01:29Z",
+    "checked_at": "2026-11-08T12:01:49Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
