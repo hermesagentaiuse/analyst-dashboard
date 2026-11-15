@@ -4,7 +4,7 @@
  "margin_collateral_億": 12028.0,
  "margin_zhang": 11128347,
  "etf_ratio": 176.9,
- "method_b_non_etf": 164.1,
+ "method_b_non_etf": 164.3,
  "official_loan_仟元": 536598938,
  "collateral_breakdown": {
   "total": 12028.0,
@@ -203,7 +203,7 @@
    "blave": 170.674
   }
  ],
- "fetched_at": "2026-11-14T22:01:03",
+ "fetched_at": "2026-11-15T22:00:27",
  "level": "🟠 偏熱",
  "source": "TWSE legacy TOTAL 官方融資金額 + TPEx OpenAPI（2026-10-20 修正版：分母=實際借款，ETF=代號格式，含上櫃）"
 }
