@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-13T20:05:44.692616+08:00",
- "report_date": "2026-11-13",
+ "generated_at": "2026-11-15T20:03:32.823057+08:00",
+ "report_date": "2026-11-15",
  "count": 6,
  "dates": [
   "2026-10-16",
@@ -31,7 +31,8 @@
   "2026-11-10",
   "2026-11-11",
   "2026-11-12",
-  "2026-11-13"
+  "2026-11-13",
+  "2026-11-15"
  ],
  "stocks": [
   {
@@ -57,13 +58,13 @@
    "pe": 37.24,
    "pb": 10.12,
    "divyield": 0.94,
-   "ret_90d_pct": -34.91,
+   "ret_90d_pct": -27.27,
    "max_dd_pct": -48.5,
    "pos_in_range_pct": 19.0,
    "hi90": 2050.0,
    "lo90": 1055.0,
    "heat": {
-    "mentions_30d": 19,
+    "mentions_30d": 18,
     "mentions_90d": 31,
     "channels_30d": [
      "何基鼎",
@@ -89,7 +90,7 @@
     ]
    },
    "rel_strength": {
-    "diff_90d_pct": -29.8,
+    "diff_90d_pct": -23.6,
     "label": "顯著弱勢（資金流失警訊）"
    },
    "levels": {
@@ -191,7 +192,7 @@
    "fund": {
     "code": "2308",
     "name": "台達電",
-    "checked_at": "2026-11-13T12:01:54Z",
+    "checked_at": "2026-11-15T12:01:26Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -228,6 +229,12 @@
       "streak_days": 0,
       "recent": [
        {
+        "date": "20261113",
+        "foreign": -1411386.0,
+        "trust": 185372.0,
+        "total": -1226014.0
+       },
+       {
         "date": "20261112",
         "foreign": -1967188.0,
         "trust": 99906.0,
@@ -250,12 +257,6 @@
         "foreign": -1625496.0,
         "trust": 268848.0,
         "total": -1356648.0
-       },
-       {
-        "date": "20261106",
-        "foreign": -3651258.0,
-        "trust": 59754.0,
-        "total": -3591504.0
        }
       ],
       "verdict": "無連續買超",
@@ -316,13 +317,13 @@
    "pe": 40.63,
    "pb": 7.25,
    "divyield": 0.25,
-   "ret_90d_pct": -10.2,
+   "ret_90d_pct": 4.67,
    "max_dd_pct": -45.1,
-   "pos_in_range_pct": 16.0,
+   "pos_in_range_pct": 15.0,
    "hi90": 1325.0,
    "lo90": 688.0,
    "heat": {
-    "mentions_30d": 25,
+    "mentions_30d": 21,
     "mentions_90d": 48,
     "channels_30d": [
      "何基鼎",
@@ -332,14 +333,14 @@
     ],
     "recent": [
      {
-      "date": "2026-11-12",
-      "channel": "何基鼎",
-      "snippet": "792 | -4.35%"
+      "date": "2026-11-13",
+      "channel": "鐘崑禎",
+      "snippet": " 霍華馬克斯所講的 橡樹資本創辦人 對吧 就這麼簡單 好 所以你看像是說 滿多的3037的欣興 欣興如果說以今天的 預估本益比來講 今天收盤價來講的話 他的本益比只有1"
      },
      {
       "date": "2026-11-12",
-      "channel": "鐘崑禎",
-      "snippet": "792 | -8.33%"
+      "channel": "何基鼎",
+      "snippet": "792 | -4.35%"
      },
      {
       "date": "2026-11-11",
@@ -349,8 +350,8 @@
     ]
    },
    "rel_strength": {
-    "diff_90d_pct": -5.1,
-    "label": "相對弱勢"
+    "diff_90d_pct": 8.3,
+    "label": "相對強勢"
    },
    "levels": {
     "stop_short": {
@@ -377,9 +378,9 @@
       "breached": false
      },
      {
-      "price": 697.9,
+      "price": 700.8,
       "tag": "現價-1×ATR",
-      "dist_pct": -11.1,
+      "dist_pct": -10.7,
       "breached": false
      },
      {
@@ -389,15 +390,15 @@
       "breached": false
      },
      {
-      "price": 610.9,
+      "price": 616.6,
       "tag": "現價-2×ATR",
-      "dist_pct": -22.2,
+      "dist_pct": -21.5,
       "breached": false
      },
      {
-      "price": 523.8,
+      "price": 532.4,
       "tag": "現價-3×ATR",
-      "dist_pct": -33.3,
+      "dist_pct": -32.2,
       "breached": false
      }
     ],
@@ -406,7 +407,7 @@
      "rule": "跌破最近下方支撐 20日低，停損出場"
     },
     "stop_next": {
-     "price": 697.9,
+     "price": 700.8,
      "rule": "跌破 20日低 後的下一道支撐 現價-1×ATR"
     },
     "anchors": [
@@ -420,7 +421,7 @@
      },
      {
       "method": "③ATR×3(波動)",
-      "price": 1046.2
+      "price": 1037.6
      },
      {
       "method": "④斐波1.272延伸",
@@ -441,7 +442,7 @@
      "rule": "⑤整數關卡"
     },
     "tp2": {
-     "price": 1046.2,
+     "price": 1037.6,
      "rule": "③ATR×3(波動)"
     },
     "tp3": {
@@ -457,7 +458,7 @@
    "fund": {
     "code": "3037",
     "name": "欣興",
-    "checked_at": "2026-11-13T12:02:58Z",
+    "checked_at": "2026-11-15T12:01:48Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -494,6 +495,12 @@
       "streak_days": 0,
       "recent": [
        {
+        "date": "20261113",
+        "foreign": -2565951.0,
+        "trust": -359521.0,
+        "total": -2925472.0
+       },
+       {
         "date": "20261112",
         "foreign": -1390125.0,
         "trust": 129622.0,
@@ -516,12 +523,6 @@
         "foreign": -10836034.0,
         "trust": 1310464.0,
         "total": -9525570.0
-       },
-       {
-        "date": "20261106",
-        "foreign": -5859317.0,
-        "trust": 614106.0,
-        "total": -5245211.0
        }
       ],
       "verdict": "無連續買超",
@@ -542,8 +543,8 @@
       "how": "最先發布的硬數據；連3月YoY負=景氣翻頭"
      },
      "7_估值": {
-      "pe": 40.99,
-      "pb": 7.32,
+      "pe": 40.63,
+      "pb": 7.25,
       "div_yield": 0.25,
       "total_market_value": null,
       "how": "PE/PB/殖利率=安全邊際",
@@ -582,13 +583,13 @@
    "pe": 14.42,
    "pb": 5.08,
    "divyield": 10.04,
-   "ret_90d_pct": -8.27,
+   "ret_90d_pct": 4.29,
    "max_dd_pct": -40.4,
-   "pos_in_range_pct": 2.0,
+   "pos_in_range_pct": 8.0,
    "hi90": 2610.0,
-   "lo90": 1545.9231,
+   "lo90": 1555.0,
    "heat": {
-    "mentions_30d": 14,
+    "mentions_30d": 12,
     "mentions_90d": 36,
     "channels_30d": [
      "何基鼎",
@@ -613,8 +614,8 @@
     ]
    },
    "rel_strength": {
-    "diff_90d_pct": -3.1,
-    "label": "相對弱勢"
+    "diff_90d_pct": 8.0,
+    "label": "相對強勢"
    },
    "levels": {
     "stop_short": {
@@ -641,27 +642,21 @@
       "breached": false
      },
      {
-      "price": 1545.92,
-      "tag": "90日低",
-      "dist_pct": -5.4,
-      "breached": false
-     },
-     {
-      "price": 1525.0,
+      "price": 1523.9,
       "tag": "現價-1×ATR",
-      "dist_pct": -6.7,
+      "dist_pct": -6.8,
       "breached": false
      },
      {
-      "price": 1415.0,
+      "price": 1412.9,
       "tag": "現價-2×ATR",
-      "dist_pct": -13.5,
+      "dist_pct": -13.6,
       "breached": false
      },
      {
-      "price": 1305.0,
+      "price": 1301.8,
       "tag": "現價-3×ATR",
-      "dist_pct": -20.2,
+      "dist_pct": -20.4,
       "breached": false
      }
     ],
@@ -670,8 +665,8 @@
      "rule": "跌破最近下方支撐 20日低，停損出場"
     },
     "stop_next": {
-     "price": 1545.92,
-     "rule": "跌破 20日低 後的下一道支撐 90日低"
+     "price": 1523.9,
+     "rule": "跌破 20日低 後的下一道支撐 現價-1×ATR"
     },
     "anchors": [
      {
@@ -680,19 +675,19 @@
      },
      {
       "method": "②量度目標(箱高投影)",
-      "price": 3674.1
+      "price": 3665.0
      },
      {
       "method": "③ATR×3(波動)",
-      "price": 1965.0
+      "price": 1968.2
      },
      {
       "method": "④斐波1.272延伸",
-      "price": 2899.4
+      "price": 2897.0
      },
      {
       "method": "④斐波1.618延伸",
-      "price": 3267.6
+      "price": 3262.0
      },
      {
       "method": "⑤整數關卡",
@@ -701,7 +696,7 @@
     ],
     "confluence": [
      {
-      "price": 1982.5,
+      "price": 1984.1,
       "methods": [
        "③ATR×3(波動)",
        "⑤整數關卡"
@@ -710,7 +705,7 @@
      }
     ],
     "tp1": {
-     "price": 1982.5,
+     "price": 1984.1,
      "rule": "共振×2：③ATR×3(波動)＋⑤整數關卡"
     },
     "tp2": {
@@ -718,7 +713,7 @@
      "rule": "①前高(90日)"
     },
     "tp3": {
-     "price": 2899.4,
+     "price": 2897.0,
      "rule": "④斐波1.272延伸"
     },
     "signals": [
@@ -730,7 +725,7 @@
    "fund": {
     "code": "6669",
     "name": "緯穎",
-    "checked_at": "2026-11-13T12:03:15Z",
+    "checked_at": "2026-11-15T12:02:12Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -764,8 +759,14 @@
       "how": "砸錢方向對+毛利率升=有效擴張；報表無單列購置欄位，此為投資活動淨流出(含債券)廣義代理，僅看趨勢"
      },
      "4_法人5日買超": {
-      "streak_days": 2,
+      "streak_days": 3,
       "recent": [
+       {
+        "date": "20261113",
+        "foreign": 443795.0,
+        "trust": -80746.0,
+        "total": 363049.0
+       },
        {
         "date": "20261112",
         "foreign": 1071520.0,
@@ -803,9 +804,9 @@
       "how": "最先發布的硬數據；連3月YoY負=景氣翻頭"
      },
      "7_估值": {
-      "pe": 13.85,
-      "pb": 4.88,
-      "div_yield": 10.46,
+      "pe": 14.42,
+      "pb": 5.08,
+      "div_yield": 10.04,
       "total_market_value": null,
       "how": "PE/PB/殖利率=安全邊際",
       "verdict": "偏低✓"
@@ -843,27 +844,19 @@
    "pe": 32.98,
    "pb": 16.59,
    "divyield": 2.38,
-   "ret_90d_pct": -30.68,
+   "ret_90d_pct": -24.4,
    "max_dd_pct": -41.3,
-   "pos_in_range_pct": 8.0,
+   "pos_in_range_pct": 17.0,
    "hi90": 770.0,
    "lo90": 452.0,
    "heat": {
-    "mentions_30d": 1,
+    "mentions_30d": 0,
     "mentions_90d": 2,
-    "channels_30d": [
-     "郭哲榮"
-    ],
-    "recent": [
-     {
-      "date": "2026-10-15",
-      "channel": "郭哲榮",
-      "snippet": ":48:15,366 --> 00:48:17,900 走開 我今天 剩幾分鐘 1519 00:48:17,900 --> 00:48:19,823 49 2分鐘 一直"
-     }
-    ]
+    "channels_30d": [],
+    "recent": []
    },
    "rel_strength": {
-    "diff_90d_pct": -25.6,
+    "diff_90d_pct": -20.7,
     "label": "顯著弱勢（資金流失警訊）"
    },
    "levels": {
@@ -885,9 +878,9 @@
       "breached": true
      },
      {
-      "price": 470.5,
+      "price": 468.9,
       "tag": "現價-1×ATR",
-      "dist_pct": -6.8,
+      "dist_pct": -7.1,
       "breached": false
      },
      {
@@ -897,20 +890,20 @@
       "breached": false
      },
      {
-      "price": 436.0,
+      "price": 432.9,
       "tag": "現價-2×ATR",
-      "dist_pct": -13.7,
+      "dist_pct": -14.3,
       "breached": false
      },
      {
-      "price": 401.5,
+      "price": 396.8,
       "tag": "現價-3×ATR",
-      "dist_pct": -20.5,
+      "dist_pct": -21.4,
       "breached": false
      }
     ],
     "stop_mid": {
-     "price": 470.5,
+     "price": 468.9,
      "rule": "跌破最近下方支撐 現價-1×ATR，停損出場"
     },
     "stop_next": {
@@ -928,7 +921,7 @@
      },
      {
       "method": "③ATR×3(波動)",
-      "price": 608.5
+      "price": 613.2
      },
      {
       "method": "④斐波1.272延伸",
@@ -945,7 +938,7 @@
     ],
     "confluence": [],
     "tp1": {
-     "price": 608.5,
+     "price": 613.2,
      "rule": "③ATR×3(波動)"
     },
     "tp2": {
@@ -965,24 +958,24 @@
    "fund": {
     "code": "1519",
     "name": "華城",
-    "checked_at": "2026-11-13T12:03:23Z",
+    "checked_at": "2026-11-15T12:02:30Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
        {
-        "period": "115Q2",
-        "gm_pct": 43.5
+        "period": "115Q3",
+        "gm_pct": 45.0
        },
        {
-        "period": "115Q1",
-        "gm_pct": 43.61
+        "period": "115Q2",
+        "gm_pct": 43.5
        }
       ],
-      "verdict": "持平/走弱",
+      "verdict": "改善",
       "how": "本季>上季=本業改善；EPS會灌水，毛利率不會"
      },
      "2_庫存佔營收": {
-      "pct": 189.1,
+      "pct": 190.2,
       "verdict": "偏高⚠",
       "how": "比重↑+營收停滯=降價清庫存前兆，比新聞早3個月"
      },
@@ -992,44 +985,26 @@
       "note": "報表未單列商譽科目視同無"
      },
      "3_資本支出/營收": {
-      "pct": 17.3,
+      "pct": 23.1,
       "label": "投資活動流出/營收(廣義)",
       "verdict": "適度",
       "proxy": true,
       "how": "砸錢方向對+毛利率升=有效擴張；報表無單列購置欄位，此為投資活動淨流出(含債券)廣義代理，僅看趨勢"
      },
      "4_法人5日買超": {
-      "streak_days": 0,
+      "streak_days": 1,
       "recent": [
+       {
+        "date": "20261113",
+        "foreign": 186266.0,
+        "trust": 24462.0,
+        "total": 210728.0
+       },
        {
         "date": "20261112",
         "foreign": -659330.0,
         "trust": 25116.0,
         "total": -634214.0
-       },
-       {
-        "date": "20261111",
-        "foreign": 3534.0,
-        "trust": -59700.0,
-        "total": -56166.0
-       },
-       {
-        "date": "20261110",
-        "foreign": -366899.0,
-        "trust": -400.0,
-        "total": -367299.0
-       },
-       {
-        "date": "20261109",
-        "foreign": 24717.0,
-        "trust": 8533.0,
-        "total": 33250.0
-       },
-       {
-        "date": "20261106",
-        "foreign": 266730.0,
-        "trust": 11165.0,
-        "total": 277895.0
        }
       ],
       "verdict": "無連續買超",
@@ -1090,7 +1065,7 @@
    "pe": null,
    "pb": null,
    "divyield": null,
-   "ret_90d_pct": -17.17,
+   "ret_90d_pct": -5.48,
    "max_dd_pct": -34.2,
    "pos_in_range_pct": 18.0,
    "hi90": 2280.0,
@@ -1102,8 +1077,8 @@
     "recent": []
    },
    "rel_strength": {
-    "diff_90d_pct": -12.1,
-    "label": "顯著弱勢（資金流失警訊）"
+    "diff_90d_pct": -1.8,
+    "label": "與大盤同步"
    },
    "levels": {
     "stop_short": {
@@ -1207,7 +1182,7 @@
    "fund": {
     "code": "8299",
     "name": "群聯",
-    "checked_at": "2026-11-13T12:04:20Z",
+    "checked_at": "2026-11-15T12:02:43Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -1241,8 +1216,14 @@
       "how": "砸錢方向對+毛利率升=有效擴張；報表無單列購置欄位，此為投資活動淨流出(含債券)廣義代理，僅看趨勢"
      },
      "4_法人5日買超": {
-      "streak_days": 2,
+      "streak_days": 3,
       "recent": [
+       {
+        "date": "20261113",
+        "foreign": 95136.0,
+        "trust": 68130.0,
+        "total": 202651.0
+       },
        {
         "date": "20261112",
         "foreign": 188654.0,
@@ -1319,33 +1300,20 @@
    "pe": 13.41,
    "pb": 8.36,
    "divyield": 4.01,
-   "ret_90d_pct": -22.4,
+   "ret_90d_pct": -12.07,
    "max_dd_pct": -33.6,
-   "pos_in_range_pct": 19.0,
+   "pos_in_range_pct": 25.0,
    "hi90": 1335.0,
    "lo90": 886.0,
    "heat": {
-    "mentions_30d": 2,
+    "mentions_30d": 0,
     "mentions_90d": 4,
-    "channels_30d": [
-     "鐘崑禎"
-    ],
-    "recent": [
-     {
-      "date": "2026-10-15",
-      "channel": "鐘崑禎",
-      "snippet": "的話 其他相關的設備廠都不會到太差 像是說 廠務工程的6196的帆軒 都有機會 2404的漢堂也是一樣 6139的亞翔也是一樣 位階都相當低 甚至說先進封中的部分 萬潤"
-     },
-     {
-      "date": "2026-10-14",
-      "channel": "鐘崑禎",
-      "snippet": "帆軒也是一樣 高檔去做震盪 那高檔震盪 資金會慢慢的輪動到其他的廠物工程 可能說2404的漢堂 有機會拉回到季線附近 太漂亮了 這個就是一個好的切入點 6139的亞鄉也"
-     }
-    ]
+    "channels_30d": [],
+    "recent": []
    },
    "rel_strength": {
-    "diff_90d_pct": -17.3,
-    "label": "顯著弱勢（資金流失警訊）"
+    "diff_90d_pct": -8.4,
+    "label": "相對弱勢"
    },
    "levels": {
     "stop_short": {
@@ -1366,9 +1334,9 @@
       "breached": true
      },
      {
-      "price": 945.3,
+      "price": 942.8,
       "tag": "現價-1×ATR",
-      "dist_pct": -5.3,
+      "dist_pct": -5.5,
       "breached": false
      },
      {
@@ -1378,14 +1346,14 @@
       "breached": false
      },
      {
-      "price": 839.9,
+      "price": 832.4,
       "tag": "現價-3×ATR",
-      "dist_pct": -15.8,
+      "dist_pct": -16.6,
       "breached": false
      }
     ],
     "stop_mid": {
-     "price": 945.3,
+     "price": 942.8,
      "rule": "跌破最近下方支撐 現價-1×ATR，停損出場"
     },
     "stop_next": {
@@ -1403,7 +1371,7 @@
      },
      {
       "method": "③ATR×3(波動)",
-      "price": 1156.1
+      "price": 1163.6
      },
      {
       "method": "④斐波1.272延伸",
@@ -1416,7 +1384,7 @@
     ],
     "confluence": [],
     "tp1": {
-     "price": 1156.1,
+     "price": 1163.6,
      "rule": "③ATR×3(波動)"
     },
     "tp2": {
@@ -1436,7 +1404,7 @@
    "fund": {
     "code": "2404",
     "name": "漢唐",
-    "checked_at": "2026-11-13T12:04:43Z",
+    "checked_at": "2026-11-15T12:03:07Z",
     "items": {
      "1_毛利率趨勢": {
       "series": [
@@ -1470,37 +1438,19 @@
       "how": "砸錢方向對+毛利率升=有效擴張；報表無單列購置欄位，此為投資活動淨流出(含債券)廣義代理，僅看趨勢"
      },
      "4_法人5日買超": {
-      "streak_days": 0,
+      "streak_days": 1,
       "recent": [
+       {
+        "date": "20261113",
+        "foreign": -7175.0,
+        "trust": 27318.0,
+        "total": 20143.0
+       },
        {
         "date": "20261112",
         "foreign": -48492.0,
         "trust": 7080.0,
         "total": -41412.0
-       },
-       {
-        "date": "20261111",
-        "foreign": 193461.0,
-        "trust": -181612.0,
-        "total": 11849.0
-       },
-       {
-        "date": "20261110",
-        "foreign": -100283.0,
-        "trust": -1000.0,
-        "total": -101283.0
-       },
-       {
-        "date": "20261109",
-        "foreign": -267808.0,
-        "trust": 2157.0,
-        "total": -265651.0
-       },
-       {
-        "date": "20261106",
-        "foreign": 227582.0,
-        "trust": -128886.0,
-        "total": 98696.0
        }
       ],
       "verdict": "無連續買超",
@@ -1521,9 +1471,9 @@
       "how": "最先發布的硬數據；連3月YoY負=景氣翻頭"
      },
      "7_估值": {
-      "pe": 14.63,
-      "pb": 10.23,
-      "div_yield": 4.12,
+      "pe": 13.41,
+      "pb": 8.36,
+      "div_yield": 4.01,
       "total_market_value": null,
       "how": "PE/PB/殖利率=安全邊際",
       "verdict": "偏低✓"
