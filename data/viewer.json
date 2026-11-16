@@ -1,0 +1,24 @@
+{
+  "_doc": "3D 拆解圖幾何設定。頂層 key＝產品 id（底線開頭的 key 會被忽略）。{productId:{preset, nodes:{code:{pos,size,shape,color?,explode?,mirror?,axis?,count?}}}}。單位約為公尺，y 軸朝上，+z 為正面。pos＝組合狀態的中心點；size＝[寬x,高y,深z]；explode＝拆解時的位移向量（省略則由預設槽位或自動排版決定）；shape：box|plate|stack|frame|cyl|cone|ogive|engines|dish|panel|cabin|sphere；mirror：x|z|xz（左右/前後鏡射複製）；axis：圓柱方向 x|y|z；count：stack 的層數（省略則取 qty_label 的 ×N）。沒列到的節點或產品一律自動排版（preset 省略時依產品 id/名稱判斷，再不行就用 generic 方陣）。",
+  "ai-rack": {
+    "preset": "rack",
+    "nodes": {
+      "rack.frame":      {"shape": "frame", "pos": [0, 1.12, 0],      "size": [0.66, 2.24, 1.16], "explode": [0, 0, 0], "color": "#6e7681"},
+      "rack.compute":    {"shape": "stack", "pos": [0, 0.58, 0.02],   "size": [0.58, 0.84, 1.0],  "explode": [0, -0.15, 1.45], "count": 18},
+      "rack.powershelf": {"shape": "stack", "pos": [0, 1.15, 0.02],   "size": [0.58, 0.24, 1.0],  "explode": [0, 0, 2.15], "count": 3},
+      "rack.switch":     {"shape": "stack", "pos": [0, 1.52, 0.02],   "size": [0.58, 0.36, 1.0],  "explode": [0, 0.1, 1.45], "count": 9},
+      "rack.bbu":        {"shape": "box",   "pos": [0, 1.83, 0.02],   "size": [0.58, 0.14, 1.0],  "explode": [0, 0.35, 2.15]},
+      "rack.network":    {"shape": "box",   "pos": [0, 2.07, 0.02],   "size": [0.58, 0.18, 1.0],  "explode": [0, 0.85, 0.7]},
+      "rack.spine":      {"shape": "panel", "pos": [0, 1.15, -0.52],  "size": [0.5, 1.7, 0.06],   "explode": [0, 0, -1.25]},
+      "rack.busbar":     {"shape": "box",   "pos": [0.2, 1.12, -0.57],"size": [0.05, 2.0, 0.04],  "explode": [0.45, 0, -2.0], "color": "#b08d57"},
+      "rack.pdu":        {"shape": "box",   "pos": [-0.2, 1.12, -0.57],"size": [0.06, 1.8, 0.05], "explode": [-0.45, 0, -2.0]},
+      "rack.manifold":   {"shape": "cyl",   "pos": [0.27, 1.1, -0.44],"size": [0.05, 1.9, 0.05],  "explode": [0.7, 0, -0.35], "mirror": "x", "axis": "y"},
+      "rack.cdu":        {"shape": "box",   "pos": [0.8, 0.9, 0],     "size": [0.55, 1.8, 1.0],   "explode": [1.2, 0, 0]},
+      "rack.hvdc":       {"shape": "box",   "pos": [-0.84, 1.0, 0],   "size": [0.6, 2.0, 1.0],    "explode": [-1.25, 0, 0]},
+      "rack.l11":        {"shape": "plate", "pos": [0, -0.04, 0],     "size": [2.6, 0.06, 1.5],   "explode": [0, -0.75, 0], "color": "#3d4757"}
+    }
+  },
+  "ev": {"preset": "car", "nodes": {}},
+  "rocket": {"preset": "rocket", "nodes": {}},
+  "leo": {"preset": "satellite", "nodes": {}}
+}
