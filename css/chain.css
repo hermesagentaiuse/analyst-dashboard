@@ -186,3 +186,13 @@
   .v3l .v3m small{display:none}
   .v3btns button{padding:6px 8px}
 }
+/* 仿真 3D：實物說明面板＋顏色模式 */
+.v3info{position:absolute;left:8px;bottom:8px;max-width:min(440px,calc(100% - 16px));background:rgba(15,20,28,.9);border:1px solid var(--bd);border-radius:8px;padding:7px 10px;font-size:12px;line-height:1.55;color:var(--tx);pointer-events:none;display:none}
+.v3info.on{display:block}
+.v3info b{font-size:13px}
+.v3info .qty{color:var(--mut);font-size:11px}
+.v3info .v3i-h{color:var(--mut)}
+.v3tools{position:absolute;right:8px;top:8px;display:flex;gap:6px}
+.v3tools button{background:rgba(23,28,38,.92);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:4px 9px;font-size:12px;cursor:pointer}
+.v3tools button:hover{border-color:var(--acc)}
+@media (max-width:760px){.v3info{font-size:11px;padding:5px 8px;max-height:40%;overflow:hidden}}

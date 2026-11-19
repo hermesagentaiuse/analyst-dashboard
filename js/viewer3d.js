@@ -2,6 +2,8 @@
 // 模型完全由資料程序化產生：每個節點＝一個基本幾何塊，依「造型預設」槽位或自動方陣排列。
 import * as THREE from './vendor/three.module.js';
 import {OrbitControls} from './vendor/OrbitControls.js';
+import {Kit,geoCache,studioEnv} from './models/kit.js?v=20261119a';
+import {sceneFor,partFor} from './models/index.js?v=20261119a';
 
 // —— data/viewer.json（可選；載入失敗＝全部自動排版）——
 let CFG={}, cfgP=null;
@@ -125,6 +127,17 @@ function gridLayout(kids){
 }
 export function computeLayout(product,focus,isRoot){
   const kids=focus.children||[];
+  // 有仿真模型的層級：依實物配置擺放（沒對應到模型的節點排在旁邊）
+  const S=kids.length?sceneFor(product.id,isRoot?'root':focus.code):null;
+  if(S){
+    const out=[], rest=[];
+    for(const c of kids){const p=S.parts&&S.parts[c.code];
+      if(p)out.push({code:c.code,node:c,detail:p,pos:[0,0,0],size:[1,1,1],explode:(p.ex||[0,0,0]).slice(),slot:'detail'}); else rest.push(c);}
+    for(const c of rest)out.push({code:c.code,node:c,shape:qtyCount(c)?'stack':'box',count:qtyCount(c),pos:[0,0,0],size:[.3,.2,.3],explode:[.4,0,0],slot:'pending'});
+    return {preset:'detail',items:out,ghosts:[],decor:S.decor||[],view:S.view||null};
+  }
+  if(!kids.length){const p=partFor(product.id,focus.code);
+    if(p)return {preset:'detail',items:[{code:focus.code,node:focus,detail:p,pos:[0,0,0],size:[1,1,1],explode:[0,0,0],slot:'self'}],ghosts:[],decor:[],view:null};}
   const preset=isRoot?presetFor(product):'generic';
   let items, ghosts=[];
   if(!kids.length)items=[{code:focus.code,node:focus,shape:'box',pos:[0,.5,0],size:[1,1,1],explode:[0,0,0],slot:'self'}];
@@ -198,9 +211,18 @@ export class Viewer{
     this.lines=document.createElementNS('http://www.w3.org/2000/svg','svg'); this.lines.setAttribute('class','v3lines');
     this.linePath=document.createElementNS('http://www.w3.org/2000/svg','path'); this.lines.appendChild(this.linePath);
     this.labelsEl=document.createElement('div'); this.labelsEl.className='v3labels';
-    stage.append(cv,this.lines,this.labelsEl);
+    // 實物說明面板＋顏色模式切換（實物材質／股價指標色）
+    this.infoEl=document.createElement('div'); this.infoEl.className='v3info';
+    this.toolsEl=document.createElement('div'); this.toolsEl.className='v3tools';
+    this.colorMode='real';
+    this.colorBtn=document.createElement('button'); this.colorBtn.type='button';
+    this.colorBtn.title='切換：實物材質顏色／依股價指標著色';
+    this.toolsEl.appendChild(this.colorBtn);
+    stage.append(cv,this.lines,this.labelsEl,this.infoEl,this.toolsEl);
+    this.renderer.toneMapping=THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure=1.05;
     this.scene=new THREE.Scene();
-    this.scene.add(new THREE.HemisphereLight(0xdde6f0,0x1a1f2a,1.6));
+    try{this.scene.environment=studioEnv(this.renderer);}catch(e){}
+    this.scene.add(new THREE.HemisphereLight(0xdde6f0,0x1a1f2a,1.1));
     const d1=new THREE.DirectionalLight(0xffffff,1.8);d1.position.set(3,5,4);this.scene.add(d1);
     const d2=new THREE.DirectionalLight(0x88aaff,.6);d2.position.set(-4,2,-3);this.scene.add(d2);
     this.camera=new THREE.PerspectiveCamera(40,1,.01,500);
@@ -231,6 +253,18 @@ export class Viewer{
     on(this.labelsEl,'click',e=>{const l=e.target.closest('.v3l');if(l&&this.cb.onPick)this.cb.onPick(l.dataset.code);});
     on(this.labelsEl,'pointerover',e=>{const l=e.target.closest('.v3l');if(l)this._setHover(l.dataset.code);});
     on(this.labelsEl,'pointerout',e=>{const l=e.target.closest('.v3l');if(l&&!l.contains(e.relatedTarget))this._setHover(null);});
+    on(this.colorBtn,'click',()=>{this.colorMode=this.colorMode==='real'?'metric':'real';this._restyle();});
+  }
+  _info(){
+    const code=this.hover||this.selected, b=code&&this.blocks.find(x=>x.code===code);
+    const anyDetail=this.blocks.some(x=>x.detail);
+    this.colorBtn.textContent=this.colorMode==='real'?'🎨 實物色':'📊 指標色';
+    this.toolsEl.style.display=anyDetail?'':'none';
+    if(!b){this.infoEl.innerHTML=anyDetail?'<span class="v3i-h">👆 指向或點選零件，看它在實物裡是什麼、做什麼</span>':'';this.infoEl.classList.toggle('on',anyDetail);return;}
+    const note=(b.it.detail&&b.it.detail.note)||b.node.desc||'';
+    const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    this.infoEl.innerHTML=`<b>${esc(b.node.name)}</b>${b.node.qty_label?` <span class="qty">${esc(b.node.qty_label)}</span>`:''}${note?`<div>${esc(note)}</div>`:''}`;
+    this.infoEl.classList.add('on');
   }
   _setMouse(e){const r=this.canvas.getBoundingClientRect();this.mouse=new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);}
   _pick(){
@@ -256,6 +290,8 @@ export class Viewer{
   }
   _clear(){
     for(const b of this.blocks){b.label.remove();}
+    // 仿真模型的幾何與材質（含快取共用的）一併釋放
+    this.root.traverse(o=>{if(o.isMesh){this.geos.add(o.geometry);if(o.material&&!this.mats.includes(o.material))this.mats.push(o.material);}});
     this.root.clear(); this.blocks=[];
     for(const g of this.geos)g.dispose(); this.geos.clear();
     for(const m of this.mats)m.dispose(); this.mats=[];
@@ -263,8 +299,34 @@ export class Viewer{
   }
   _build(o){
     this._clear();
-    const {preset,items,ghosts}=computeLayout(o.product,o.focus,o.isRoot);
-    this.preset=preset; this.ghosts=[];
+    const L=computeLayout(o.product,o.focus,o.isRoot), {preset,items,ghosts}=L;
+    this.preset=preset; this.ghosts=[]; this.view=L.view||null;
+    const cache=geoCache();
+    const recenter=g=>{const bx=new THREE.Box3().setFromObject(g);if(bx.isEmpty())return {c:new THREE.Vector3(),s:new THREE.Vector3(.1,.1,.1)};
+      const c=bx.getCenter(new THREE.Vector3()), s=bx.getSize(new THREE.Vector3());for(const ch of g.children)ch.position.sub(c);return {c,s};};
+    // 裝飾（托盤機殼、機櫃外框…）：不可點、跟著拆解移動
+    for(const d of L.decor||[]){
+      const K=new Kit(cache); d.build(K); const g=K.root, {c,s}=recenter(g);
+      g.traverse(ch=>{if(ch.isMesh)ch.raycast=()=>{};}); this.root.add(g);
+      this.ghosts.push({g,base:c,ex:new THREE.Vector3(...(d.ex||[0,0,0])),size:[s.x,s.y,s.z]});
+    }
+    // 仿真零件
+    for(const it of items){
+      if(!it.detail)continue;
+      const K=new Kit(cache); it.detail.build(K); const g=K.root, {c,s}=recenter(g);
+      it.pos=[c.x,c.y,c.z]; it.size=[Math.max(s.x,.01),Math.max(s.y,.01),Math.max(s.z,.01)];
+      const meshes=[]; g.traverse(ch=>{if(ch.isMesh){ch.userData.code=it.code;meshes.push(ch);}}); g.userData.code=it.code;
+      this.root.add(g);
+      const label=document.createElement('div'); label.className='v3l off'; label.dataset.code=it.code; this.labelsEl.appendChild(label);
+      this.blocks.push({it,code:it.code,node:it.node,detail:true,mats:[...K.mats.values()],inst:[{g,base:c.clone(),ex:new THREE.Vector3(...it.explode)}],meshes,label,lw:0,lh:0,visible:true,anchorY:it.size[1]/2});
+    }
+    // 沒有對應模型的節點：排在模型右側一列
+    const pend=items.filter(it=>it.slot==='pending');
+    if(pend.length){
+      const bb=new THREE.Box3(); for(const b of this.blocks)bb.expandByObject(b.inst[0].g); for(const s of this.ghosts)bb.expandByObject(s.g);
+      const sz=bb.isEmpty()?1:Math.max(.2,bb.getSize(new THREE.Vector3()).length()*.08);
+      pend.forEach((it,i)=>{it.size=[sz,sz*.6,sz];it.pos=[(bb.isEmpty()?0:bb.max.x)+sz*1.2,(bb.isEmpty()?0:bb.min.y)+sz*.3+i*sz*.9,(bb.isEmpty()?0:(bb.min.z+bb.max.z)/2)];it.explode=[sz*.6,0,0];});
+    }
     if(ghosts.length){
       const gm=new THREE.MeshStandardMaterial({color:0x8b949e,metalness:.1,roughness:.8,transparent:true,opacity:.22,depthWrite:false});
       const gl=new THREE.LineBasicMaterial({color:0x8b949e,transparent:true,opacity:.35});
@@ -278,6 +340,7 @@ export class Viewer{
       }
     }
     for(const it of items){
+      if(it.detail)continue;
       const mat=new THREE.MeshStandardMaterial({color:0x566173,metalness:.25,roughness:.62,transparent:true});
       const lineMat=new THREE.LineBasicMaterial({color:0x0b0f15,transparent:true,opacity:.55});
       this.mats.push(mat,lineMat);
@@ -317,7 +380,7 @@ export class Viewer{
     const fov=THREE.MathUtils.degToRad(this.camera.fov), hfov=2*Math.atan(Math.tan(fov/2)*this.camera.aspect);
     const sz=this.box.getSize(new THREE.Vector3()), tall=sz.y>1.6*Math.max(sz.x,sz.z);
     const dist=r/Math.sin(Math.min(fov,hfov)/2)*(tall?1.02:.82);
-    const dir=new THREE.Vector3(.85,.55,1.45).normalize();
+    const dir=new THREE.Vector3(...(this.view||[.85,.55,1.45])).normalize();
     this.camera.position.copy(c).addScaledVector(dir,dist);
     this.camera.near=dist/100; this.camera.far=dist*20; this.camera.updateProjectionMatrix();
     this.controls.target.copy(c); this.controls.minDistance=r*.25; this.controls.maxDistance=r*6; this.controls.update();
@@ -346,10 +409,23 @@ export class Viewer{
       const hit=themeOn?o.hitOf(b.node):null;
       b.visible=!(themeOn&&o.onlyTheme&&!hit);
       for(const s of b.inst)s.g.visible=b.visible;
-      b.mat.color.copy(colorFrom(o.colorOf?o.colorOf(b.node):null,b.it.color));
       const sel=b.code===this.selected, hov=b.code===this.hover;
       let em=0x000000, ei=0;
       if(sel){em=0x2f81f7;ei=.6;}else if(hov){em=0x58a6ff;ei=.38;}else if(hit==='full'){em=0x14b8a6;ei=.5;}else if(hit==='part'){em=0x14b8a6;ei=.22;}
+      if(b.detail){ // 仿真零件：保留實物材質，高亮用自發光；指標色模式才改成股價顏色
+        const dim=themeOn&&!hit&&!sel&&!hov, metric=this.colorMode==='metric';
+        const mc=metric?colorFrom(o.colorOf?o.colorOf(b.node):null,'#566173'):null;
+        for(const m of b.mats){
+          m.color.copy(metric?mc:m.userData.base);
+          if(ei>0){m.emissive.setHex(em);m.emissiveIntensity=ei;}else{m.emissive.copy(m.userData.baseEmissive);m.emissiveIntensity=m.userData.baseEI;}
+          const tr=dim||m.userData.baseTransparent; if(m.transparent!==tr){m.transparent=tr;m.needsUpdate=true;}
+          m.opacity=dim?.14:m.userData.baseOpacity; m.depthWrite=!tr;
+        }
+        b.label.classList.toggle('sel',sel); b.label.classList.toggle('hov',hov);
+        b.label.classList.toggle('hit',!!hit); b.label.classList.toggle('dim',dim);
+        continue;
+      }
+      b.mat.color.copy(colorFrom(o.colorOf?o.colorOf(b.node):null,b.it.color));
       b.mat.emissive.setHex(em); b.mat.emissiveIntensity=ei;
       const dim=themeOn&&!hit&&!sel&&!hov;
       b.mat.opacity=dim?.2:(b.it.shape==='frame'?.95:1); b.mat.depthWrite=!dim;
@@ -357,6 +433,7 @@ export class Viewer{
       b.label.classList.toggle('sel',sel); b.label.classList.toggle('hov',hov);
       b.label.classList.toggle('hit',!!hit); b.label.classList.toggle('dim',dim);
     }
+    this._info();
     this.dirty=true;
   }
   _frame(){
@@ -426,6 +503,7 @@ export class Viewer{
     for(const [el,ev,fn,opt] of this._on)el.removeEventListener(ev,fn,opt);
     this._clear(); this.controls.dispose(); this.renderer.dispose();
     try{this.renderer.forceContextLoss();}catch(e){}
-    this.canvas.remove(); this.lines.remove(); this.labelsEl.remove();
+    if(this.scene.environment)this.scene.environment.dispose();
+    this.canvas.remove(); this.lines.remove(); this.labelsEl.remove(); this.infoEl.remove(); this.toolsEl.remove();
   }
 }

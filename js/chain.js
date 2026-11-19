@@ -282,7 +282,7 @@ function renderTheme(tid){
 }
 
 // —— 🧊 3D 拆解圖（viewer3d.js 以 ES module 延遲載入；WebGL 不可用時退回樹狀）——
-const V3_VER='20261116c'; // 改 viewer3d.js 時更新，避開瀏覽器模組快取
+const V3_VER='20261119a'; // 改 viewer3d.js 時更新，避開瀏覽器模組快取
 const V3={inst:null,stage:null,modP:null,tok:0,pid:null,focus:null,exploded:false,nextStart:null,gl:null,failed:false,why:''};
 function webglOK(){
   if(V3.gl!=null)return V3.gl;
