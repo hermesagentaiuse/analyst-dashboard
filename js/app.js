@@ -1,14 +1,14 @@
 // 主頁：資料載入、分析師/持股分頁、主表篩選排序、報告
 'use strict';
 let MAN=null, cur=null, sortK='mentions', sortAsc=false, filters=new Set(), themeFilter='';
-let STATS={}, FUND={}, MENT=null, CHDATA={}, MARGIN=null, BIZ=null, PF=null, PFDATE=null, FLOW=null;
+let STATS={}, FUND={}, MENT=null, CHDATA={}, MARGIN=null, BIZ=null, PF=null, PFDATE=null, FLOW=null, SHORTCOV=null;
 const CHIP_ORDER=['pf','all','zhangzhen','gd1788','we178','s178','gooaye'];
 const LAN_URL='http://edgexpert-dd4f.local:8090/';
 
 async function boot(){
   MAN=await jget('data/manifest.json'); if(!MAN){document.getElementById('updated').textContent='載入失敗';return}
   document.getElementById('updated').innerHTML='最後更新：'+esc(MAN.updated_at?new Date(MAN.updated_at).toLocaleString('zh-TW'):'—')+'　｜　點分析師切換、點欄位排序、點股票列看詳情　｜　'+lanLink('✏️ 管理我的持股','color:#d29922');
-  [STATS,FUND,MENT,MARGIN,FLOW,BIZ,PF]=await Promise.all(['stats','fundamentals','mentions','margin_ratio','flow_trends','biz_cycle','portfolio'].map(n=>jget('data/'+n+'.json')));
+  [STATS,FUND,MENT,MARGIN,FLOW,BIZ,PF,SHORTCOV]=await Promise.all(['stats','fundamentals','mentions','margin_ratio','flow_trends','biz_cycle','portfolio','short_cover'].map(n=>jget('data/'+n+'.json')));
   STATS=STATS||{}; FUND=FUND||{};
   renderMacro();
   const chips=document.getElementById('chips');

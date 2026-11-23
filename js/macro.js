@@ -32,6 +32,38 @@ function renderMacro(){
       <div class=ms>${MARGIN.level||''}｜保證金 ${MARGIN.margin_collateral_億??'—'} 億｜融資 ${MARGIN.margin_zhang?.toLocaleString?MARGIN.margin_zhang.toLocaleString():'—'} 張${pubLine}${spark}<br>
       <span class=mitem>資料日 ${MARGIN.date||'—'}｜130%斷頭線 140%警戒 180%過熱｜實線=玩股網帳戶成本口径（媒體公布同源） 虛線=Blave市值口径（≈方法A）｜${MARGIN.source||''}</span></div></div>`);
   }
+  if(SHORTCOV&&SHORTCOV.rows&&SHORTCOV.rows.length){
+    const R=SHORTCOV.rows, last=R[R.length-1];
+    const SIG_COL={'回補上漲':'var(--ok)','回補平淡':'#e3b341','加空下跌':'var(--bad)','中性':'var(--tx)'};
+    const SIG_ICON={'回補上漲':'📈','回補平淡':'↔️','加空下跌':'📉','中性':'—'};
+    // sparkline：外資期現合一淨部位（口）
+    let spark='';
+    const S=R.filter(x=>x.tx_all_net!=null);
+    if(S.length>=5){
+      const W=200,H=42,pad=3;
+      const vals=S.map(x=>x.tx_all_net);
+      const lo=Math.min(...vals)-500,hi=Math.max(...vals)+500;
+      const X=i=>pad+i*(W-2*pad)/(S.length-1), Y=v=>H-pad-(v-lo)/((hi-lo)||1)*(H-2*pad);
+      const poly=S.map((x,i)=>`${X(i).toFixed(1)},${Y(x.tx_all_net).toFixed(1)}`).join(' ');
+      const lastV=S[S.length-1].tx_all_net;
+      spark=`<svg width="${W}" height="${H}" style="margin-top:4px"><polyline points="${poly}" fill="none" stroke="#4da3ff" stroke-width="1.6"/>
+        <text x="${W-2}" y="10" text-anchor="end" font-size="9" fill="#4da3ff">${lastV.toLocaleString()} 口</text>
+        <text x="2" y="${H-3}" font-size="8" fill="#888">外資臺系期現合一淨部位（負＝淨空）</text></svg>`;
+    }
+    // 近5日明細表
+    let tbl='';
+    const recent=R.slice(-5).reverse();
+    tbl='<table style="font-size:10px;width:100%;margin-top:4px;border-collapse:collapse"><tr style="color:#8b949e"><th align=left>日期</th><th align=right>大盤%</th><th align=right>期貨淨部位Δ</th><th align=right>融券Δ(張)</th><th>訊號</th></tr>';
+    for(const x of recent){
+      const c=SIG_COL[x.signal]||'var(--tx)';
+      tbl+=`<tr><td>${x.date.slice(5)}</td><td align=right style="color:${x.taimex>0?'var(--bad)':x.taimex<0?'var(--ok)':'var(--tx)'}">${x.taimex!=null?(x.taimex>0?'+':'')+x.taimex+'%':'—'}</td><td align=right>${x.tx_delta!=null?(x.tx_delta>0?'+':'')+x.tx_delta.toLocaleString():'—'}</td><td align=right style="color:${x.sq_delta!=null&&x.sq_delta<0?'var(--bad)':'var(--tx)'}">${x.sq_delta!=null?(x.sq_delta>0?'+':'')+x.sq_delta.toLocaleString():'—'}</td><td style="color:${c}">${SIG_ICON[x.signal]||''}${x.signal||'—'}</td></tr>`;    }
+    tbl+='</table>';
+    cards.push(`<div class=mcard><div class=mt>🛡️ 空單回補監測（外資期貨＋融券）</div>
+      <div class=mv style="color:${SIG_COL[last.signal]||'var(--tx)'}">${last.signal||'資料不足'}<span class=mitem style="font-weight:400"> ${last.date||''}</span></div>
+      <div class=ms>${last.note||''}<br>
+      <span class=mitem>判讀：外資期貨淨部位<b>增加</b>＝空單回補（買回平倉，利空出盡訊號）；<b>減少</b>＝加空。融券餘額<b>減少</b>＝現券回補（軋空）。三大法人現貨賣超≠期货空頭，兩者要分開看</span>
+      ${spark}${tbl}<br><span class=mitem>資料源：TAIFEX 三大法人期貨部位＋臺證/櫃買融券餘額｜每晚更新｜${SHORTCOV.generated_at?('生成 '+SHORTCOV.generated_at.slice(0,10)):''}</span></div></div>`);
+  }
   if(BIZ){
     let lamps='';
     if(BIZ.items) for(const [k,v] of Object.entries(BIZ.items))
