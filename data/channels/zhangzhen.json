@@ -2,7 +2,7 @@
  "id": "zhangzhen",
  "name": "張震",
  "color": "#8e4ec6",
- "generated_at": "2026-11-24T16:53:37.474212+00:00",
+ "generated_at": "2026-11-24T22:25:11.987003+00:00",
  "report_date": "2026-11-24",
  "report_title": "【張震】投資委員會分析報告",
  "codes": [
@@ -44,6 +44,9 @@
    "volratio": 0.99,
    "sample_days": 140,
    "chg_period": -4.8,
+   "pe": 14.86,
+   "divyield": 2.83,
+   "pb": 3.09,
    "price": 614.0,
    "rsi14": 38.51,
    "vol5_vs_vol20": 0.99,
